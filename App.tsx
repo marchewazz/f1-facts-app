@@ -1,12 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
 import { ReactElement } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import FactsScreen from './screens/FactsScreen';
+import DriversStandingsScreen from './screens/DriversStandingsScreen';
+import ConstructorsStandingsScreen from './screens/ConstructorsStandingsScreen';
+import CalendarScreen from './screens/CalendarScreen';
+import BottomNavBar from './components/BottomNavBar';
 
 export default function App(): ReactElement<any, any> {
+
+  const Tab = createBottomTabNavigator();
+
   return (
-    <View>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator tabBar={(props: BottomTabBarProps) => <BottomNavBar {...props} />}>
+        <Tab.Screen name="Facts" component={FactsScreen} />
+        <Tab.Screen name="Drivers standings" component={DriversStandingsScreen} />
+        <Tab.Screen name="Constructor standings" component={ConstructorsStandingsScreen} />
+        <Tab.Screen name="Calendar" component={CalendarScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
