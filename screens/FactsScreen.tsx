@@ -25,13 +25,11 @@ export default function FactsScreen() {
     }
 
     useEffect(() => {
-        Accelerometer.setUpdateInterval(2000)
+        Accelerometer.setUpdateInterval(1000)
         const subscription = Accelerometer.addListener(({ x, y, z }) => {
             const acceleration = Math.sqrt(x * x + y * y + z * z);
-           
-            console.log(acceleration);
-            
-            const sensibility = 2;
+         
+            const sensibility = 1.8;
             if (acceleration >= sensibility) {
               changeFact();
             }
