@@ -16,11 +16,11 @@ export default interface RaceSchedule {
     },
     date: string,
     time: string,
-    FirstPractice: {
+    FirstPractice?: {
       date: string,
       time: string
     },
-    SecondPractice: {
+    SecondPractice?: {
         date: string,
         time: string
     },
@@ -28,7 +28,7 @@ export default interface RaceSchedule {
         date: string,
         time: string
     },
-    Qualifying: {
+    Qualifying?: {
       date: string,
       time: string
     },
