@@ -71,6 +71,9 @@ export default function ConstructorsStandingsScreen() {
                         return (
                             <View key={constructor.Constructor.constructorId} className="flex flex-row justify-between">
                                 <Text>
+                                    { constructor.positionText }
+                                </Text>
+                                <Text>
                                     { constructor.Constructor.name }
                                 </Text>
                                 <Text>
