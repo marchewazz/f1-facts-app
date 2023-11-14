@@ -69,7 +69,7 @@ export default function CalendarDisplay() {
                 <>
                     { calendar.map((race: RaceSchedule) => {
                         return (
-                            <View className="flex flex-row justify-between">
+                            <View key={`${race.season}-${race.round}`} className="flex flex-row justify-between">
                                 <Text>
                                     { race.raceName }
                                 </Text>

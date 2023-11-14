@@ -69,7 +69,7 @@ export default function ConstructorsStandingsScreen() {
                 <>
                     { standings.map((constructor: Constructor) => {
                         return (
-                            <View className="flex flex-row justify-between">
+                            <View key={constructor.Constructor.constructorId} className="flex flex-row justify-between">
                                 <Text>
                                     { constructor.Constructor.name }
                                 </Text>
