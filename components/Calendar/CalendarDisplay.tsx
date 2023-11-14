@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import RaceSchedule from "../../models/RaceSchedule.model";
 
-export default function CalendarDisplay() {
+export default function CalendarDisplay(props: any) {
     const [years, setYears] = useState<{
         year: string
     }[]>([
@@ -70,7 +70,7 @@ export default function CalendarDisplay() {
                     { calendar.map((race: RaceSchedule) => {
                         return (
                             <View key={`${race.season}-${race.round}`} className="flex flex-row justify-between">
-                                <Text>
+                                <Text onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
                                     { race.raceName }
                                 </Text>
                                 <Text>

@@ -45,10 +45,8 @@ export default function NextRaceCountdown() {
             minutes: 60,
             seconds: 1
         };
-    
+
         let raceDate = dateToLocal(new Date(new Date(`${raceSchedule?.date}T${raceSchedule?.time}`).toUTCString()))
-        console.log(raceDate);
-        
         
         let delta = Math.abs(raceDate.getTime() - new Date().getTime()) / 1000
         
