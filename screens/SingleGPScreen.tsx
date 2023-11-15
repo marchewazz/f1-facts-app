@@ -6,9 +6,6 @@ export default function SingleGPScreen(props: any) {
 
     const schedule: RaceSchedule = props.route.params.schedule;
 
-    console.log(schedule);
-    
-
     return (
         <View>
             <Text>{`${schedule.season} ${schedule.raceName}` }</Text>
@@ -38,7 +35,7 @@ export default function SingleGPScreen(props: any) {
                 </Text>
             ) : (null)}
             <Text>
-                {`Race: ${schedule.date} ${schedule.time}`}
+                {`Race: ${schedule.date} ${schedule.time ?? ""}`}
             </Text>
         </View>
     )

@@ -15,7 +15,7 @@ export default interface RaceSchedule {
       }
     },
     date: string,
-    time: string,
+    time?: string,
     FirstPractice?: {
       date: string,
       time: string
