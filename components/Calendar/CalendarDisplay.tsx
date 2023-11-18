@@ -1,9 +1,10 @@
-import { View, Text } from "react-native";
-import Constructor from "../models/Constructor.model";
 import { useEffect, useState } from "react";
+import { View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import RaceSchedule from "../../models/RaceSchedule.model";
+import { getDate } from "../../util/dateFunctions";
 
-export default function ConstructorsStandingsScreen() {
+export default function CalendarDisplay(props: any) {
     const [years, setYears] = useState<{
         year: string
     }[]>([
@@ -16,17 +17,17 @@ export default function ConstructorsStandingsScreen() {
         year: string
     }>({year: "2023"});
 
-    const [standings, setStandings] = useState<Constructor[]>([]);
+    const [calendar, setCalendar] = useState<RaceSchedule[]>([]);
 
     const [ready, setReady] = useState<boolean>(false)
 
-    async function getStandings() {
+    async function getCalendar() {
         try {
             setReady(false)
-            const response = await fetch(`http://ergast.com/api/f1/${value.year}/constructorStandings.json`)
+            const response = await fetch(`http://ergast.com/api/f1/${value.year}.json`)
             const json = await response.json();
-            // console.log(json.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
-            setStandings(json.MRData.StandingsTable.StandingsLists[0].ConstructorStandings as Constructor[]);
+           
+            setCalendar(json.MRData.RaceTable.Races as RaceSchedule[]);
           } catch (error) {
             console.error(error);
           } finally {
@@ -35,7 +36,7 @@ export default function ConstructorsStandingsScreen() {
     }
 
     useEffect(() => {
-        getStandings()
+        getCalendar()
     }, [value])
     
 
@@ -44,7 +45,7 @@ export default function ConstructorsStandingsScreen() {
             year: string
         }[]  = []
 
-        for (let i = 2023; i >= 1958; i--) {
+        for (let i = 2023; i >= 1950; i--) {
             years.push({
                 year: i.toString()
             })
@@ -67,17 +68,14 @@ export default function ConstructorsStandingsScreen() {
             />
             { ready ? (
                 <>
-                    { standings.map((constructor: Constructor) => {
+                    { calendar.map((race: RaceSchedule) => {
                         return (
-                            <View key={constructor.Constructor.constructorId} className="flex flex-row justify-between">
-                                <Text>
-                                    { constructor.positionText }
+                            <View key={`${race.season}-${race.round}`} className="flex flex-row justify-between">
+                                <Text onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
+                                    { race.raceName }
                                 </Text>
                                 <Text>
-                                    { constructor.Constructor.name }
-                                </Text>
-                                <Text>
-                                    { constructor.points }
+                                    { getDate(new Date(`${race.date}T${race.time ?? "0:00:00"}`)) }
                                 </Text>
                             </View>
                         )

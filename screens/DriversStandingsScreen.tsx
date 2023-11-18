@@ -71,7 +71,7 @@ export default function DriversStandingsScreen() {
                 <>
                     { standings.map((driver: Driver) => {
                         return (
-                            <View className="flex flex-row justify-between">
+                            <View key={driver.Driver.driverId} className="flex flex-row justify-between">
                                 <Text>
                                     { driver.positionText }
                                 </Text>

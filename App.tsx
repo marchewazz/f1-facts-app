@@ -8,6 +8,7 @@ import DriversStandingsScreen from './screens/DriversStandingsScreen';
 import ConstructorsStandingsScreen from './screens/ConstructorsStandingsScreen';
 import CalendarScreen from './screens/CalendarScreen';
 import BottomNavBar from './components/BottomNavBar';
+import SingleGPScreen from './screens/SingleGPScreen';
 
 export default function App(): ReactElement<any, any> {
 
@@ -20,6 +21,7 @@ export default function App(): ReactElement<any, any> {
         <Tab.Screen name="Drivers standings" component={DriversStandingsScreen} />
         <Tab.Screen name="Constructor standings" component={ConstructorsStandingsScreen} />
         <Tab.Screen name="Calendar" component={CalendarScreen} />
+        <Tab.Screen name="SingleGPScreen" component={SingleGPScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
