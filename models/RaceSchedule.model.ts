@@ -16,24 +16,30 @@ export default interface RaceSchedule {
     },
     date: string,
     time?: string,
+    localTime: Date,
     FirstPractice?: {
       date: string,
-      time: string
+      time: string,
+      localTime: Date,
     },
     SecondPractice?: {
         date: string,
-        time: string
+        time: string,
+        localTime: Date,
     },
     ThirdPractice?: {
         date: string,
-        time: string
+        time: string,
+        localTime: Date,
     },
     Qualifying?: {
       date: string,
-      time: string
+      time: string,
+      localTime: Date,
     },
     Sprint?: {
       date: string,
-      time: string
+      time: string,
+      localTime: Date,
     }
   }

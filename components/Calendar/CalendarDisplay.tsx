@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import RaceSchedule from "../../models/RaceSchedule.model";
+import { getDate } from "../../util/dateFunctions";
 
 export default function CalendarDisplay(props: any) {
     const [years, setYears] = useState<{
@@ -74,7 +75,7 @@ export default function CalendarDisplay(props: any) {
                                     { race.raceName }
                                 </Text>
                                 <Text>
-                                    { race.date }
+                                    { getDate(new Date(`${race.date}T${race.time ?? "0:00:00"}`)) }
                                 </Text>
                             </View>
                         )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import RaceSchedule from "../../models/RaceSchedule.model";
-import dateToLocal from "../../util/dateToLocal";
+
 
 export default function NextRaceCountdown() {
 
@@ -45,8 +45,9 @@ export default function NextRaceCountdown() {
             minutes: 60,
             seconds: 1
         };
-
-        let raceDate = dateToLocal(new Date(new Date(`${raceSchedule?.date}T${raceSchedule?.time}`).toUTCString()))
+        console.log(raceSchedule);
+        
+        let raceDate = new Date(`${raceSchedule?.date}T${raceSchedule?.time}`)
         
         let delta = Math.abs(raceDate.getTime() - new Date().getTime()) / 1000
         
@@ -90,13 +91,16 @@ export default function NextRaceCountdown() {
                     </Text>
                     <View className="flex flex-row justify-between">
                         <Text>
-                            { countdown.days }
+                            In: 
                         </Text>
                         <Text>
-                            { countdown.hours }
+                            Days: { countdown.days }
                         </Text>
                         <Text>
-                            { countdown.minutes }
+                            Hours: { countdown.hours }
+                        </Text>
+                        <Text>
+                            Minutes: { countdown.minutes }
                         </Text>
                     </View>
                 </View>
