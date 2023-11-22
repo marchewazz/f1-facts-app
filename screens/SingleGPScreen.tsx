@@ -3,22 +3,43 @@ import { useIsFocused } from "@react-navigation/native";
 import RaceSchedule from "../models/RaceSchedule.model";
 import { useEffect, useState } from "react";
 import { getDate, getTime } from "../util/dateFunctions";
+import RaceResults from "../models/RaceResults.model";
+import RaceResultsDisplay from "../components/Results/RaceResultsDisplay";
 
 export default function SingleGPScreen(props: any) {    
 
     const [schedule, setSchedule] = useState<RaceSchedule>()
+    const [raceResults, setRaceResults] = useState<RaceResults>()
+    const [tab, setTab] = useState<string>("race")
+
     const focus = useIsFocused();  
-    console.log(props.route.params.schedule);
     
     const [ready, setReady] = useState<boolean>(false)
 
+    async function fetchRaceResults() {
+        try {            
+            const response = await fetch(`http://ergast.com/api/f1/${props.route.params.schedule.season}/${props.route.params.schedule.round}/results.json`)
+            const json = await response.json();
+        
+            setRaceResults(json.MRData.RaceTable.Races[0].Results as RaceResults);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
+    async function fetchData() {
+        await fetchRaceResults()
+        setReady(true)
+    }
+
+    
     useEffect(() => {
         if (focus == true) {
             setReady(false)
+            fetchData()
             setSchedule(props.route.params.schedule)
         }
     }, [focus])
-    
 
     useEffect(() => {
         if (schedule) {
@@ -27,11 +48,7 @@ export default function SingleGPScreen(props: any) {
             if (schedule.ThirdPractice) schedule.ThirdPractice.localTime = new Date(`${schedule.ThirdPractice?.date}T${schedule.ThirdPractice?.time ?? "0:00:00"}`)
             if (schedule.Qualifying) schedule.Qualifying.localTime = new Date(`${schedule.Qualifying?.date}T${schedule.Qualifying?.time ?? "0:00:00"}`)
             if (schedule.Sprint) schedule.Sprint.localTime = new Date(`${schedule.Sprint?.date}T${schedule.Sprint?.time ?? "0:00:00"}`)
-            console.log(`fdsfs`);
-
-            if (schedule.date) schedule.localTime = new Date(`${schedule.date}T${schedule.time ?? "0:00:00"}`)
-
-            setReady(true)
+            if (schedule.date) schedule.localTime = new Date(`${schedule.date}T${schedule.time ?? "0:00:00"}`)    
         }
     }, [schedule])
     
@@ -115,9 +132,17 @@ export default function SingleGPScreen(props: any) {
                     ) : (null)}
                 </>
                     )}
-                    <Text>
-                        {`Race: ${getDate(schedule.localTime)} ${schedule.time ? getTime(schedule.localTime) : ""}`}
+                    <Text onPress={() => { if(raceResults) setTab("race")}}>
+                        <Text className={`${raceResults ? "underline" : ""}`}>
+                            Race
+                        </Text>
+                        {`: ${getDate(schedule.localTime)} ${schedule.time ? getTime(schedule.localTime) : ""}`}
                     </Text>
+                    <View>
+                        { tab == "race" && raceResults ? (
+                            <RaceResultsDisplay raceResults={raceResults} />
+                        ) : (null)}
+                    </View>
                 </>
             ) : (
                 <Text>

@@ -7,7 +7,7 @@ export default function BottomNavBar(props: BottomTabBarProps) {
     return (
         <View className="flex flex-row justify-between h-12 w-full">
             { props.state.routes.map((route: any, index: number) => { 
-                if (route.name != "SingleGPScreen") {
+                if (route.name != "SingleGPScreen" && route.name != "RaceResultsScreen") {
                     return (
                         <TouchableOpacity
                         key={index}
