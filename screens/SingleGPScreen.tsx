@@ -6,6 +6,7 @@ import { getDate, getTime } from "../util/dateFunctions";
 import RaceResults from "../models/RaceResults.model";
 import RaceResultsDisplay from "../components/Results/RaceResultsDisplay";
 import SprintResultsDisplay from "../components/Results/SprintResultsDisplay";
+import GPCountdown from "../components/SingleGP/GPCountdown";
 
 export default function SingleGPScreen(props: any) {    
 
@@ -184,9 +185,7 @@ export default function SingleGPScreen(props: any) {
                             </>
                         ) : (
                             <>
-                                <Text>
-                                    Race soon
-                                </Text>
+                                <GPCountdown raceDate={schedule.localTime} />
                             </>
                         )}
                         
