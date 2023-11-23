@@ -16,6 +16,9 @@ export default function RaceResultsDisplay(props: { raceResults: RaceResults }) 
                     Position
                 </Text>
                 <Text>
+                    Grid
+                </Text>
+                <Text>
                     Name
                 </Text>
                 <Text>

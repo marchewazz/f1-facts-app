@@ -10,6 +10,13 @@ export default function SprintResultDriverDisplay(props: { driver: DriverResult 
                 { getPositionText(props.driver.positionText) }
             </Text>
             <Text>
+                { props.driver.grid === "0" ? (
+                    "Pit lane"
+                ) : (
+                    props.driver.grid
+                )}
+            </Text>
+            <Text>
                 { props.driver.Driver.givenName } { props.driver.Driver.familyName }
             </Text>
             <Text>

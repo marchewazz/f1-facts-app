@@ -13,6 +13,9 @@ export default function SprintResultsDisplay(props: { sprintResults: RaceResults
                     Position
                 </Text>
                 <Text>
+                    Grid
+                </Text>
+                <Text>
                     Name
                 </Text>
                 <Text>
