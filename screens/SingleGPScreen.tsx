@@ -41,9 +41,13 @@ export default function SingleGPScreen(props: any) {
     }
     
     async function fetchData() {
-        if (new Date(`${props.route.params.schedule.date}T${props.route.params.schedule.time ?? "0:00:00"}`).getTime() < new Date().getTime()) await fetchRaceResults()
         if (schedule?.Sprint && new Date(`${props.route.params.schedule.Sprint?.date}T${props.route.params.schedule.Sprint?.time ?? "0:00:00"}`).getTime() < new Date().getTime()) {
             await fetchSprintResults()
+            setTab("sprint")
+        }
+        if (new Date(`${props.route.params.schedule.date}T${props.route.params.schedule.time ?? "0:00:00"}`).getTime() < new Date().getTime()) {
+            await fetchRaceResults()
+            setTab("race")
         }
         setReady(true)
     }
@@ -52,6 +56,10 @@ export default function SingleGPScreen(props: any) {
     useEffect(() => {
         if (focus == true) {
             setReady(false)
+            setTab("race")
+            setRaceResults(undefined);
+            setSprintResults(undefined);
+            setSchedule(undefined);
             setSchedule(props.route.params.schedule)
             fetchData()
         }
