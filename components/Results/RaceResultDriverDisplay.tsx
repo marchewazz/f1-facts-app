@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import { DriverResult } from "../../models/RaceResults.model";
+import getPositionText from "../../util/positionText";
 
 export default function RaceResultDriverDisplay(props: { driver: DriverResult }) {
   
@@ -13,7 +14,7 @@ export default function RaceResultDriverDisplay(props: { driver: DriverResult })
                 ):(null)}
             </Text>
             <Text>
-                { props.driver.positionText }
+                { getPositionText(props.driver.positionText) }
             </Text>
             <Text>
                 { props.driver.Driver.givenName } { props.driver.Driver.familyName }
