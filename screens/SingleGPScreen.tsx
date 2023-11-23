@@ -168,7 +168,7 @@ export default function SingleGPScreen(props: any) {
                         { raceResults || sprintResults ? (
                             <>
                                 { tab == "race" && raceResults ? (
-                                    <RaceResultsDisplay raceResults={raceResults} />
+                                    <RaceResultsDisplay raceResults={raceResults} season={schedule.season} />
                                 ) : (null)}
                                 { tab == "sprint" && sprintResults ? (
                                     <SprintResultsDisplay sprintResults={sprintResults} />
