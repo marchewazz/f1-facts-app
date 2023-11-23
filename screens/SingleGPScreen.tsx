@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { getDate, getTime } from "../util/dateFunctions";
 import RaceResults from "../models/RaceResults.model";
 import RaceResultsDisplay from "../components/Results/RaceResultsDisplay";
+import SprintResultsDisplay from "../components/Results/SprintResultsDisplay";
 
 export default function SingleGPScreen(props: any) {    
 
     const [schedule, setSchedule] = useState<RaceSchedule>()
     const [raceResults, setRaceResults] = useState<RaceResults>()
+    const [sprintResults, setSprintResults] = useState<RaceResults>()
     const [tab, setTab] = useState<string>("race")
 
     const focus = useIsFocused();  
@@ -26,9 +28,22 @@ export default function SingleGPScreen(props: any) {
             console.error(error);
         }
     }
+
+    async function fetchSprintResults() {
+        try {            
+            const response = await fetch(`http://ergast.com/api/f1/${props.route.params.schedule.season}/${props.route.params.schedule.round}/sprint.json`)
+            const json = await response.json();
+            console.log(json.MRData.RaceTable.Races[0].SprintResults);
+            
+            setSprintResults(json.MRData.RaceTable.Races[0].SprintResults as RaceResults);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     
     async function fetchData() {
         await fetchRaceResults()
+        if (schedule?.Sprint) fetchSprintResults()
         setReady(true)
     }
 
@@ -78,8 +93,11 @@ export default function SingleGPScreen(props: any) {
                                 </Text>
                             ) : (null)}
                             { schedule.Sprint ? (
-                                <Text>
-                                    {`Sprint: ${getDate(schedule.Sprint.localTime)} ${schedule.Sprint.time ? getTime(schedule.Sprint.localTime) : ""}`}
+                                <Text onPress={() => { if(sprintResults) setTab("sprint")}}>
+                                    <Text className={`${sprintResults ? "underline" : ""}`}>
+                                        Sprint
+                                    </Text>
+                                    {`: ${getDate(schedule.Sprint.localTime)} ${schedule.Sprint.time ? getTime(schedule.Sprint.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
                         </>
@@ -101,8 +119,11 @@ export default function SingleGPScreen(props: any) {
                                 </Text>
                             ) : (null)}
                             { schedule.Sprint ? (
-                                <Text>
-                                    {`Sprint: ${getDate(schedule.Sprint.localTime)} ${schedule.Sprint.time ? getTime(schedule.Sprint.localTime) : ""}`}
+                                <Text onPress={() => { if(sprintResults) setTab("sprint")}}>
+                                    <Text className={`${sprintResults ? "underline" : ""}`}>
+                                        Sprint
+                                    </Text>
+                                    {`: ${getDate(schedule.Sprint.localTime)} ${schedule.Sprint.time ? getTime(schedule.Sprint.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
                         </>
@@ -141,6 +162,9 @@ export default function SingleGPScreen(props: any) {
                     <View>
                         { tab == "race" && raceResults ? (
                             <RaceResultsDisplay raceResults={raceResults} />
+                        ) : (null)}
+                        { tab == "sprint" && sprintResults ? (
+                            <SprintResultsDisplay sprintResults={sprintResults} />
                         ) : (null)}
                     </View>
                 </>
