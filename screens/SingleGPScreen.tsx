@@ -42,8 +42,10 @@ export default function SingleGPScreen(props: any) {
     }
     
     async function fetchData() {
-        await fetchRaceResults()
-        if (schedule?.Sprint) fetchSprintResults()
+        if (new Date(`${props.route.params.schedule.date}T${props.route.params.schedule.time ?? "0:00:00"}`).getTime() < new Date().getTime()) await fetchRaceResults()
+        if (schedule?.Sprint && new Date(`${props.route.params.schedule.Sprint?.date}T${props.route.params.schedule.Sprint?.time ?? "0:00:00"}`).getTime() < new Date().getTime()) {
+            fetchSprintResults()
+        }
         setReady(true)
     }
 
@@ -160,12 +162,23 @@ export default function SingleGPScreen(props: any) {
                         {`: ${getDate(schedule.localTime)} ${schedule.time ? getTime(schedule.localTime) : ""}`}
                     </Text>
                     <View>
-                        { tab == "race" && raceResults ? (
-                            <RaceResultsDisplay raceResults={raceResults} />
-                        ) : (null)}
-                        { tab == "sprint" && sprintResults ? (
-                            <SprintResultsDisplay sprintResults={sprintResults} />
-                        ) : (null)}
+                        { raceResults || sprintResults ? (
+                            <>
+                                { tab == "race" && raceResults ? (
+                                    <RaceResultsDisplay raceResults={raceResults} />
+                                ) : (null)}
+                                { tab == "sprint" && sprintResults ? (
+                                    <SprintResultsDisplay sprintResults={sprintResults} />
+                                ) : (null)}
+                            </>
+                        ) : (
+                            <>
+                                <Text>
+                                    Race soon
+                                </Text>
+                            </>
+                        )}
+                        
                     </View>
                 </>
             ) : (
