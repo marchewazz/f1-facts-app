@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import RaceSchedule from "../../models/RaceSchedule.model";
 
 
-export default function NextRaceCountdown() {
+export default function NextRaceCountdown(props: { navigation: any }) {
 
     const [raceSchedule, setRaceSchedule] = useState<RaceSchedule>();
 
@@ -86,8 +86,12 @@ export default function NextRaceCountdown() {
         <View>
             { ready ? (
                 <View>
-                    <Text>
-                        Next Grand Prix: { raceSchedule?.raceName }
+                    <Text 
+                    onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: raceSchedule })}>
+                        Next Grand Prix:{" "}   
+                        <Text className="underline">
+                            { raceSchedule?.season } { raceSchedule?.raceName }
+                        </Text>
                     </Text>
                     <View className="flex flex-row justify-between">
                         <Text>

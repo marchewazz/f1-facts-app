@@ -33,8 +33,7 @@ export default function SingleGPScreen(props: any) {
         try {            
             const response = await fetch(`http://ergast.com/api/f1/${props.route.params.schedule.season}/${props.route.params.schedule.round}/sprint.json`)
             const json = await response.json();
-            console.log(json.MRData.RaceTable.Races[0].SprintResults);
-            
+        
             setSprintResults(json.MRData.RaceTable.Races[0].SprintResults as RaceResults);
         } catch (error) {
             console.error(error);
@@ -44,7 +43,7 @@ export default function SingleGPScreen(props: any) {
     async function fetchData() {
         if (new Date(`${props.route.params.schedule.date}T${props.route.params.schedule.time ?? "0:00:00"}`).getTime() < new Date().getTime()) await fetchRaceResults()
         if (schedule?.Sprint && new Date(`${props.route.params.schedule.Sprint?.date}T${props.route.params.schedule.Sprint?.time ?? "0:00:00"}`).getTime() < new Date().getTime()) {
-            fetchSprintResults()
+            await fetchSprintResults()
         }
         setReady(true)
     }
@@ -53,13 +52,17 @@ export default function SingleGPScreen(props: any) {
     useEffect(() => {
         if (focus == true) {
             setReady(false)
-            fetchData()
             setSchedule(props.route.params.schedule)
+            fetchData()
         }
     }, [focus])
 
     useEffect(() => {
+        console.log(schedule);
+        
         if (schedule) {
+            console.log(schedule);
+            
             if (schedule.FirstPractice) schedule.FirstPractice.localTime = new Date(`${schedule.FirstPractice?.date}T${schedule.FirstPractice?.time ?? "0:00:00"}`)
             if (schedule.SecondPractice) schedule.SecondPractice.localTime = new Date(`${schedule.SecondPractice?.date}T${schedule.SecondPractice?.time ?? "0:00:00"}`)
             if (schedule.ThirdPractice) schedule.ThirdPractice.localTime = new Date(`${schedule.ThirdPractice?.date}T${schedule.ThirdPractice?.time ?? "0:00:00"}`)
@@ -72,7 +75,7 @@ export default function SingleGPScreen(props: any) {
 
     return (
         <View>
-            { ready && schedule ? (
+            { ready && schedule?.localTime ? (
                 <>
                     <Text>{`${schedule.season} ${schedule.raceName}` }</Text>
                     { schedule.Sprint  ? (

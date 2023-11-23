@@ -6,7 +6,7 @@ export default function CalendarScreen(props: any) {
  
     return (
         <View>
-            <NextRaceCountdown />
+            <NextRaceCountdown navigation={props.navigation} />
             <CalendarDisplay navigation={props.navigation} />
         </View>
     )
