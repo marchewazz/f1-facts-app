@@ -7,12 +7,15 @@ import RaceResults from "../models/RaceResults.model";
 import RaceResultsDisplay from "../components/Results/RaceResultsDisplay";
 import SprintResultsDisplay from "../components/Results/SprintResultsDisplay";
 import GPCountdown from "../components/SingleGP/GPCountdown";
+import QualifyingResults from "../models/QualifyingResults.model";
+import QualifyingResultsDisplay from "../components/Results/QualifyingResultsDisplay";
 
 export default function SingleGPScreen(props: any) {    
 
     const [schedule, setSchedule] = useState<RaceSchedule>()
     const [raceResults, setRaceResults] = useState<RaceResults>()
     const [sprintResults, setSprintResults] = useState<RaceResults>()
+    const [qualifyingResults, setQualifyingResults] = useState<QualifyingResults>()
     const [tab, setTab] = useState<string>("race")
 
     const focus = useIsFocused();  
@@ -41,8 +44,24 @@ export default function SingleGPScreen(props: any) {
         }
     }
     
+    async function fetchQualifyingResults() {
+        try {            
+            const response = await fetch(`http://ergast.com/api/f1/${props.route.params.schedule.season}/${props.route.params.schedule.round}/qualifying.json`)
+            const json = await response.json();
+        
+            setQualifyingResults(json.MRData.RaceTable.Races[0].QualifyingResults as QualifyingResults);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     async function fetchData() {
-        if (schedule?.Sprint && new Date(`${props.route.params.schedule.Sprint?.date}T${props.route.params.schedule.Sprint?.time ?? "0:00:00"}`).getTime() < new Date().getTime()) {
+        if (props.route.params.schedule?.season >= "2003") {
+            if (props.route.params.schedule?.Qualifying) {
+                if (new Date(`${props.route.params.schedule.Qualifying?.date}T${props.route.params.schedule.Qualifying?.time ?? "0:00:00"}`).getTime() < new Date().getTime()) fetchQualifyingResults()
+            } else fetchQualifyingResults()
+        }
+        if (props.route.params.schedule?.Sprint && new Date(`${props.route.params.schedule.Sprint?.date}T${props.route.params.schedule.Sprint?.time ?? "0:00:00"}`).getTime() < new Date().getTime()) {
             await fetchSprintResults()
             setTab("sprint")
         }
@@ -60,6 +79,7 @@ export default function SingleGPScreen(props: any) {
             setTab("race")
             setRaceResults(undefined);
             setSprintResults(undefined);
+            setQualifyingResults(undefined)
             setSchedule(undefined);
             setSchedule(props.route.params.schedule)
             fetchData()
@@ -67,11 +87,7 @@ export default function SingleGPScreen(props: any) {
     }, [focus])
 
     useEffect(() => {
-        console.log(schedule);
-        
         if (schedule) {
-            console.log(schedule);
-            
             if (schedule.FirstPractice) schedule.FirstPractice.localTime = new Date(`${schedule.FirstPractice?.date}T${schedule.FirstPractice?.time ?? "0:00:00"}`)
             if (schedule.SecondPractice) schedule.SecondPractice.localTime = new Date(`${schedule.SecondPractice?.date}T${schedule.SecondPractice?.time ?? "0:00:00"}`)
             if (schedule.ThirdPractice) schedule.ThirdPractice.localTime = new Date(`${schedule.ThirdPractice?.date}T${schedule.ThirdPractice?.time ?? "0:00:00"}`)
@@ -96,9 +112,16 @@ export default function SingleGPScreen(props: any) {
                                     {`First practice: ${getDate(schedule.FirstPractice.localTime)} ${schedule.FirstPractice.time ? getTime(schedule.FirstPractice.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
-                            { schedule.Qualifying ? (
-                                <Text>
-                                    {`Qualifying: ${getDate(schedule.Qualifying.localTime)} ${schedule.Qualifying.time ? getTime(schedule.Qualifying.localTime) : ""}`}
+                            { schedule.Qualifying || qualifyingResults ? (
+                                <Text onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
+                                    <Text className={`${qualifyingResults ? "underline" : ""}`}>
+                                        Qualifying
+                                    </Text>
+                                    { schedule.Qualifying ? (
+                                        <>
+                                            {`: ${getDate(schedule.Qualifying.localTime)} ${schedule.Qualifying.time ? getTime(schedule.Qualifying.localTime) : ""}`}
+                                        </>
+                                    ) : (null)}
                                 </Text>
                             ) : (null)}
                             { schedule.SecondPractice ? (
@@ -122,9 +145,16 @@ export default function SingleGPScreen(props: any) {
                                     {`First practice: ${getDate(schedule.FirstPractice.localTime)} ${schedule.FirstPractice.time ? getTime(schedule.FirstPractice.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
-                            { schedule.Qualifying ? (
-                                <Text>
-                                    {`Qualifying: ${getDate(schedule.Qualifying.localTime)} ${schedule.Qualifying.time ? getTime(schedule.Qualifying.localTime) : ""}`}
+                            { schedule.Qualifying || qualifyingResults ? (
+                                <Text onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
+                                    <Text className={`${qualifyingResults ? "underline" : ""}`}>
+                                        Qualifying
+                                    </Text>
+                                    { schedule.Qualifying ? (
+                                        <>
+                                            {`: ${getDate(schedule.Qualifying.localTime)} ${schedule.Qualifying.time ? getTime(schedule.Qualifying.localTime) : ""}`}
+                                        </>
+                                    ) : (null)}
                                 </Text>
                             ) : (null)}
                             { schedule.SecondPractice ? (
@@ -160,9 +190,16 @@ export default function SingleGPScreen(props: any) {
                             {`Thrid practice: ${getDate(schedule.ThirdPractice.localTime)} ${schedule.ThirdPractice.time ? getTime(schedule.ThirdPractice.localTime) : ""}`}
                         </Text>
                     ) : (null)}
-                    { schedule.Qualifying ? (
-                        <Text>
-                            {`Qualifying: ${getDate(schedule.Qualifying.localTime)} ${schedule.Qualifying.time ? getTime(schedule.Qualifying.localTime) : ""}`}
+                    { schedule.Qualifying || qualifyingResults ? (
+                        <Text onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
+                            <Text className={`${qualifyingResults ? "underline" : ""}`}>
+                                Qualifying
+                            </Text>
+                            { schedule.Qualifying ? (
+                                <>
+                                    {`: ${getDate(schedule.Qualifying.localTime)} ${schedule.Qualifying.time ? getTime(schedule.Qualifying.localTime) : ""}`}
+                                </>
+                            ) : (null)}
                         </Text>
                     ) : (null)}
                 </>
@@ -181,6 +218,9 @@ export default function SingleGPScreen(props: any) {
                                 ) : (null)}
                                 { tab == "sprint" && sprintResults ? (
                                     <SprintResultsDisplay sprintResults={sprintResults} />
+                                ) : (null)}
+                                { tab == "qualifying" && qualifyingResults ? (
+                                    <QualifyingResultsDisplay qualifyingResults={qualifyingResults} />
                                 ) : (null)}
                             </>
                         ) : (
