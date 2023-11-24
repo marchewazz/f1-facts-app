@@ -4,7 +4,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import RaceSchedule from "../../models/RaceSchedule.model";
 import { getDate } from "../../util/dateFunctions";
 
-export default function CalendarDisplay(props: any) {
+export default function CalendarDisplay(props: { navigation: any }) {
     const [years, setYears] = useState<{
         year: string
     }[]>([
