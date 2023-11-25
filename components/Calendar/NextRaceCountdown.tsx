@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { View, Text } from "react-native";
 import RaceSchedule from "../../models/RaceSchedule.model";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 export default function NextRaceCountdown(props: { navigation: any }) {
@@ -18,6 +19,8 @@ export default function NextRaceCountdown(props: { navigation: any }) {
     })
 
     const [ready, setReady] = useState<boolean>(false)
+
+    const intervalRef = useRef<any>(null);
 
     async function getRace() {
         try {
@@ -45,7 +48,6 @@ export default function NextRaceCountdown(props: { navigation: any }) {
             minutes: 60,
             seconds: 1
         };
-        console.log(raceSchedule);
         
         let raceDate = new Date(`${raceSchedule?.date}T${raceSchedule?.time}`)
         
@@ -67,20 +69,31 @@ export default function NextRaceCountdown(props: { navigation: any }) {
         }
 
         setCountdown(res)
-
-        setTimeout(() => {
-            countTime()
-        }, 60000);
     } 
 
     useEffect(() => {
-        if (raceSchedule) countTime()
-    }, [raceSchedule])
-    
+        if (raceSchedule) {
+            intervalRef.current = setInterval(() => {
+                countTime()
+            }, 60000);
+        }
+        
+    }, [raceSchedule]) 
 
-    useEffect(() => {
-        getRace()
-    }, [])    
+    useFocusEffect(
+        useCallback(() => {
+            setCountdown({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+            })
+            getRace()
+            return () => {
+                clearInterval(intervalRef.current) 
+                intervalRef.current = null
+            }
+        },[])
+    )
 
     return (
         <View>

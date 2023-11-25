@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import RaceSchedule from "../../models/RaceSchedule.model";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 export default function GPCountdown(props: { raceDate: Date }) {
@@ -15,6 +16,8 @@ export default function GPCountdown(props: { raceDate: Date }) {
         minutes: 0,
     })
 
+    const intervalRef = useRef<any>(null);
+
     function countTime() {
 
         const structure: {
@@ -28,7 +31,7 @@ export default function GPCountdown(props: { raceDate: Date }) {
             minutes: 60,
             seconds: 1
         };
-        
+     
         let delta = Math.abs(props.raceDate.getTime() - new Date().getTime()) / 1000
         
         let res: {
@@ -48,19 +51,30 @@ export default function GPCountdown(props: { raceDate: Date }) {
 
         setCountdown(res)
 
-        setTimeout(() => {
-            countTime()
-        }, 60000);
     }     
-
+    
     useEffect(() => {
-        setCountdown({
-            days: 0,
-            hours: 0,
-            minutes: 0,
-        })
-        countTime()
-    }, [])    
+        if (props.raceDate) {
+            intervalRef.current = setInterval(() => {
+                countTime()
+            }, 1000);
+        }
+        
+    }, [props.raceDate]) 
+
+    useFocusEffect(
+        useCallback(() => {
+            setCountdown({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+            })
+            return () => {
+                clearInterval(intervalRef.current) 
+                intervalRef.current = null
+            }
+        },[])
+    )
 
     return (
         <View>
