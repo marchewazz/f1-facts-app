@@ -9,6 +9,7 @@ import SprintResultsDisplay from "../components/Results/SprintResultsDisplay";
 import GPCountdown from "../components/SingleGP/GPCountdown";
 import QualifyingResults from "../models/QualifyingResults.model";
 import QualifyingResultsDisplay from "../components/Results/QualifyingResultsDisplay";
+import TrackMarkerMap from "../components/SingleGP/TrackMarkerMap";
 
 export default function SingleGPScreen(props: any) {    
 
@@ -102,6 +103,7 @@ export default function SingleGPScreen(props: any) {
         <View>
             { ready && schedule?.localTime ? (
                 <>
+                    <TrackMarkerMap lat={schedule.Circuit.Location.lat} long={schedule.Circuit.Location.long} />
                     <Text>{`${schedule.season} ${schedule.raceName}` }</Text>
                     { schedule.Sprint  ? (
                     <>
