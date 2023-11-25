@@ -24,6 +24,11 @@ export default function SprintResultsDisplay(props: { sprintResults: RaceResults
                 <Text>
                     Time
                 </Text>
+                { props.sprintResults[0].points ? (
+                    <Text>
+                        Points
+                    </Text>
+                ) : (null)} 
             </View>
             { props.sprintResults.map((result: DriverResult) => {
                 return (
