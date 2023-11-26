@@ -105,6 +105,7 @@ export default function SingleGPScreen(props: any) {
                 <>
                     <TrackMarkerMap lat={schedule.Circuit.Location.lat} long={schedule.Circuit.Location.long} />
                     <Text>{`${schedule.season} ${schedule.raceName}` }</Text>
+                    <Text>{ schedule.Circuit.circuitName }</Text>
                     { schedule.Sprint  ? (
                     <>
                     { schedule.season === "2023" ? (
