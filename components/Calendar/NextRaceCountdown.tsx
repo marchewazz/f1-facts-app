@@ -98,29 +98,33 @@ export default function NextRaceCountdown(props: { navigation: any }) {
     return (
         <View>
             { ready ? (
-                <View>
-                    <Text 
-                    onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: raceSchedule })}>
-                        Next Grand Prix:{" "}   
-                        <Text className="underline">
-                            { raceSchedule?.season } { raceSchedule?.raceName }
+                <>
+                    { raceSchedule ? (
+                    <View>
+                        <Text 
+                        onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: raceSchedule })}>
+                            Next Grand Prix:{" "}   
+                            <Text className="underline">
+                                { raceSchedule?.season } { raceSchedule?.raceName }
+                            </Text>
                         </Text>
-                    </Text>
-                    <View className="flex flex-row justify-between">
-                        <Text>
-                            In: 
-                        </Text>
-                        <Text>
-                            Days: { countdown.days }
-                        </Text>
-                        <Text>
-                            Hours: { countdown.hours }
-                        </Text>
-                        <Text>
-                            Minutes: { countdown.minutes }
-                        </Text>
+                        <View className="flex flex-row justify-between">
+                            <Text>
+                                In: 
+                            </Text>
+                            <Text>
+                                Days: { countdown.days }
+                            </Text>
+                            <Text>
+                                Hours: { countdown.hours }
+                            </Text>
+                            <Text>
+                                Minutes: { countdown.minutes }
+                            </Text>
+                        </View>
                     </View>
-                </View>
+                ) : (null)}
+                </>
             ) : (
                 <Text>
                     Loading...
