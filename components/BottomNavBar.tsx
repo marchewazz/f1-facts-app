@@ -16,18 +16,18 @@ export default function BottomNavBar(props: BottomTabBarProps) {
                         accessibilityRole="button"
                         onPress={() => props.navigation.navigate(route.name)}>
                             { route.name === "Facts" ? (
-                                <FontAwesomeIcon icon={faLightbulb} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                                <FontAwesomeIcon icon={faLightbulb} size={22} color={`${props.state.index === index ? "#FF1801" : "#FFF"}`} />
                             ):(null)}
                             { route.name === "Drivers standings" ? (
-                                <FontAwesomeIcon icon={faTrophy} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                                <FontAwesomeIcon icon={faTrophy} size={22} color={`${props.state.index === index ? "#FF1801" : "#FFF"}`} />
                             ):(null)}
                             { route.name === "Constructors standings" ? (
-                                <FontAwesomeIcon icon={faTrophy} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                                <FontAwesomeIcon icon={faTrophy} size={22} color={`${props.state.index === index ? "#FF1801" : "#FFF"}`} />
                             ):(null)}
                             { route.name === "Calendar" ? (
-                                <FontAwesomeIcon icon={faCalendar} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                                <FontAwesomeIcon icon={faCalendar} size={22} color={`${props.state.index === index ? "#FF1801" : "#FFF"}`} />
                             ):(null)}
-                            <Text className={`${props.state.index === index ? "text-red-700" : "text-white"}`}>
+                            <Text className={`${props.state.index === index ? "text-main-red" : "text-white"}`}>
                                 { route.name }
                             </Text>
                         </TouchableOpacity>
