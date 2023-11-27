@@ -27,7 +27,9 @@ export default function SprintResultDriverDisplay(props: { driver: DriverResult 
                     props.driver.Time.time
                 ) : (props.driver.status)}
             </Text>
-           
+            <Text>
+                +{ props.driver.points }
+            </Text>
         </View>
     )
 }

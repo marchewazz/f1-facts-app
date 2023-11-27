@@ -29,6 +29,11 @@ export default function RaceResultsDisplay(props: { raceResults: RaceResults, se
                 <Text>
                     Time
                 </Text>
+                { props.raceResults[0].points ? (
+                    <Text>
+                        Points
+                    </Text>
+                ) : (null)} 
             </View>
             { props.raceResults.map((result: DriverResult) => {
                 return (

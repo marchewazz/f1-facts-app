@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 export default function QualifyingResultsDisplay(props: { qualifyingResults: DriverQualifyingResult[] }) {
 
     const [qualifyingPart, setQualifyingPart] = useState<"Q1" | "Q2" | "Q3">("Q1");
-
-    useEffect(() => {
-        if (props.qualifyingResults[0].Q1) setQualifyingPart("Q1") 
-        if (props.qualifyingResults[0].Q2) setQualifyingPart("Q2") 
-        if (props.qualifyingResults[0].Q3) setQualifyingPart("Q3") 
-    }, [])
     
+    useEffect(() => {
+        let tempPart: "Q1" | "Q2" | "Q3" = "Q1";
+        if (props.qualifyingResults[0].Q1) tempPart = "Q1"
+        if (props.qualifyingResults[0].Q2) tempPart = "Q2" 
+        if (props.qualifyingResults[0].Q3) tempPart = "Q3"
+        setQualifyingPart(tempPart)
+    }, [])
 
     return (
         <View>
@@ -53,7 +54,7 @@ export default function QualifyingResultsDisplay(props: { qualifyingResults: Dri
             <View>
                 { props.qualifyingResults
                 .filter((driver: DriverQualifyingResult) => qualifyingPart in driver)
-                .sort((driver1: DriverQualifyingResult, driver2: DriverQualifyingResult) => { return driver1[qualifyingPart] > driver2[qualifyingPart] })
+                .sort((driver1: DriverQualifyingResult, driver2: DriverQualifyingResult) => { return (driver1[qualifyingPart] || "999:99:999") > (driver2[qualifyingPart] || "999:99:999") ? 1 : -1 })
                 .map((driver: DriverQualifyingResult, index: number) => {
                     return (
                         <View className="flex flex-row justify-between">
@@ -67,7 +68,7 @@ export default function QualifyingResultsDisplay(props: { qualifyingResults: Dri
                                 { driver.Constructor.name }
                             </Text>
                             <Text>
-                                { driver[qualifyingPart] }
+                                { driver[qualifyingPart] || "No time" }
                             </Text>
                         </View>
                     )

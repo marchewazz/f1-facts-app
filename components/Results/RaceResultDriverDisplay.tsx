@@ -34,7 +34,9 @@ export default function RaceResultDriverDisplay(props: { driver: DriverResult })
                     props.driver.Time.time
                 ) : (props.driver.status)}
             </Text>
-           
+            <Text>
+                +{ props.driver.points }
+            </Text>
         </View>
     )
 }
