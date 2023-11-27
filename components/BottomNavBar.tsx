@@ -1,20 +1,33 @@
+import { faCalendar, faTrophy, faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
-import { ParamListBase } from "@react-navigation/native";
-import { StatusBar, Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 
 export default function BottomNavBar(props: BottomTabBarProps) {    
     
     return (
-        <View className="flex flex-row justify-between h-12 w-full">
+        <View className="flex flex-row justify-between h-14 w-full bg-black">
             { props.state.routes.map((route: any, index: number) => { 
                 if (route.name != "SingleGPScreen" && route.name != "RaceResultsScreen") {
                     return (
                         <TouchableOpacity
                         key={index}
-                        className={`flex h-full items-center ${props.state.index === index ? "bg-red-700" : "bg-white"}`}
+                        className={`flex flex-col justify-evenly h-full w-auto items-center`}
                         accessibilityRole="button"
                         onPress={() => props.navigation.navigate(route.name)}>
-                            <Text>
+                            { route.name === "Facts" ? (
+                                <FontAwesomeIcon icon={faLightbulb} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                            ):(null)}
+                            { route.name === "Drivers standings" ? (
+                                <FontAwesomeIcon icon={faTrophy} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                            ):(null)}
+                            { route.name === "Constructors standings" ? (
+                                <FontAwesomeIcon icon={faTrophy} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                            ):(null)}
+                            { route.name === "Calendar" ? (
+                                <FontAwesomeIcon icon={faCalendar} size={22} color={`${props.state.index === index ? "#B91C1C" : "#FFF"}`} />
+                            ):(null)}
+                            <Text className={`${props.state.index === index ? "text-red-700" : "text-white"}`}>
                                 { route.name }
                             </Text>
                         </TouchableOpacity>

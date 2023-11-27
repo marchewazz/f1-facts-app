@@ -16,10 +16,10 @@ export default function App(): ReactElement<any, any> {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator tabBar={(props: BottomTabBarProps) => <BottomNavBar {...props} />}>
+      <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={(props: BottomTabBarProps) => <BottomNavBar {...props} />}>
         <Tab.Screen name="Facts" component={FactsScreen} />
         <Tab.Screen name="Drivers standings" component={DriversStandingsScreen} />
-        <Tab.Screen name="Constructor standings" component={ConstructorsStandingsScreen} />
+        <Tab.Screen name="Constructors standings" component={ConstructorsStandingsScreen} />
         <Tab.Screen name="Calendar" component={CalendarScreen} />
         <Tab.Screen name="SingleGPScreen" component={SingleGPScreen} />
       </Tab.Navigator>
