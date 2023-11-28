@@ -55,8 +55,9 @@ export default function CalendarDisplay(props: { navigation: any }) {
     }, [])
 
     return (
-        <View>
+        <View className="bg-main-background min-h-screen">
             <Dropdown 
+                className="bg-white p-2"
                 data={years} 
                 labelField="year"
                 valueField="year"
@@ -67,22 +68,22 @@ export default function CalendarDisplay(props: { navigation: any }) {
                 }}
             />
             { ready ? (
-                <>
+                <View className="px-2 py-1">
                     { calendar.map((race: RaceSchedule) => {
                         return (
-                            <View key={`${race.season}-${race.round}`} className="flex flex-row justify-between">
-                                <Text onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
+                            <View key={`${race.season}-${race.round}`} className="flex flex-row items-center justify-between w-full my-1">
+                                <Text className="text-lg text-white underline" onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
                                     { race.raceName }
                                 </Text>
-                                <Text>
+                                <Text className="text-lg text-white">
                                     { getDate(new Date(`${race.date}T${race.time ?? "0:00:00"}`)) }
                                 </Text>
                             </View>
                         )
                     })}
-                </>
+                </View>
             ) : (
-                <Text>
+                <Text className="text-white p-2 text-2xl">
                     Loading...
                 </Text>
             )}
