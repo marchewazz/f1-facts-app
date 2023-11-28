@@ -27,7 +27,7 @@ export default function BottomNavBar(props: BottomTabBarProps) {
                             { route.name === "Calendar" ? (
                                 <FontAwesomeIcon icon={faCalendar} size={22} color={`${props.state.index === index ? "#FF1801" : "#FFF"}`} />
                             ):(null)}
-                            <Text className={`${props.state.index === index ? "text-main-red" : "text-white"}`}>
+                            <Text className={`font-bold ${props.state.index === index ? "text-main-red" : "text-white"}`}>
                                 { route.name }
                             </Text>
                         </TouchableOpacity>
