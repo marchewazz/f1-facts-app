@@ -56,8 +56,9 @@ export default function DriversStandingsScreen() {
     }, [])
 
     return (
-        <View>
+        <View className="bg-main-background min-h-screen">
             <Dropdown 
+                className="bg-white p-2"
                 data={years} 
                 labelField="year"
                 valueField="year"
@@ -68,25 +69,36 @@ export default function DriversStandingsScreen() {
                 }}
             />
             { ready ? (
-                <>
-                    { standings.map((driver: Driver) => {
-                        return (
-                            <View key={driver.Driver.driverId} className="flex flex-row justify-between">
-                                <Text>
-                                    { driver.positionText }
-                                </Text>
-                                <Text>
-                                    { driver.Driver.givenName } { driver.Driver.familyName }
-                                </Text>
-                                <Text>
-                                    { driver.points }
-                                </Text>
-                            </View>
-                        )
-                    })}
-                </>
+                <View className="px-2 py-1">
+                        { standings.map((driver: Driver) => {
+                            return (
+                                <View key={driver.Driver.driverId} className="flex flex-row items-center justify-between w-full my-1">
+                                    <Text className="w-10 text-2xl text-white">
+                                        { driver.positionText }
+                                    </Text>
+                                    <View className="flex justify-center items-start grow">
+                                        <Text className="text-lg text-white">
+                                            { driver.Driver.givenName } { driver.Driver.familyName }
+                                        </Text>
+                                        <Text className="text-lg text-white">
+                                            { driver.Constructors.length > 1 ? (
+                                                driver.Constructors.map((constructor, index) => {
+                                                    return `${constructor.name}${index != driver.Constructors.length - 1 ? "/" : ""}` 
+                                                })
+                                            ) : (
+                                                driver.Constructors[0].name
+                                            )}
+                                        </Text>
+                                    </View>
+                                    <Text className="text-2xl justify-self-end text-white">
+                                        { driver.points }
+                                    </Text>
+                                </View>
+                            )
+                        })}
+                    </View>
             ) : (
-                <Text>
+                <Text className="text-white p-2 text-2xl">
                     Loading...
                 </Text>
             )}

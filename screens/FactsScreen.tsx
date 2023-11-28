@@ -44,7 +44,7 @@ export default function FactsScreen() {
     )
 
     return (
-        <View className="w-full h-full p-5 flex justify-center items-center bg-[#373837]">
+        <View className="w-full h-full p-5 flex justify-center items-center bg-main-background">
             <Text className="text-4xl text-center text-white italic font-extrabold">{ facts[factIndex] }</Text>
         </View>
     )
