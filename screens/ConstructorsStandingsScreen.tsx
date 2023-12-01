@@ -99,7 +99,7 @@ export default function ConstructorsStandingsScreen() {
                                         </Text>
                                     ) : (null)}
                                 </View>
-                                <Text className="text-2xl justify-self-end text-white w-12 text-end">
+                                <Text className="text-2xl justify-self-end text-white w-12 text-right">
                                     { constructor.points }
                                 </Text>
                             </View>
