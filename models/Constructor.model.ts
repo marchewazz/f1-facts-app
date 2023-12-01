@@ -9,4 +9,14 @@ export default interface Constructor {
       name: string,
       nationality: string
     }
+    Drivers?: {
+      driverId: string,
+      permanentNumber: string,
+      code: string,
+      url: string,
+      givenName: string,
+      familyName: string,
+      dateOfBirth: string,
+      nationality: string
+    }[]
   }

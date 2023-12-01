@@ -53,7 +53,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
 
         setYears(years)
     }, [])
-
+    
     return (
         <View className="bg-main-background min-h-screen">
             <Dropdown 

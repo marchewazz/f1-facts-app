@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from "react-native";
-import { useIsFocused } from "@react-navigation/native"; 
+import { useFocusEffect } from "@react-navigation/native"; 
 import RaceSchedule from "../models/RaceSchedule.model";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getDate, getTime } from "../util/dateFunctions";
 import RaceResults from "../models/RaceResults.model";
 import RaceResultsDisplay from "../components/Results/RaceResultsDisplay";
@@ -18,8 +18,6 @@ export default function SingleGPScreen(props: any) {
     const [sprintResults, setSprintResults] = useState<RaceResults>()
     const [qualifyingResults, setQualifyingResults] = useState<QualifyingResults>()
     const [tab, setTab] = useState<string>("race")
-
-    const focus = useIsFocused();  
     
     const [ready, setReady] = useState<boolean>(false)
 
@@ -73,20 +71,6 @@ export default function SingleGPScreen(props: any) {
         setReady(true)
     }
 
-    
-    useEffect(() => {
-        if (focus == true) {
-            setReady(false)
-            setTab("race")
-            setRaceResults(undefined);
-            setSprintResults(undefined);
-            setQualifyingResults(undefined)
-            setSchedule(undefined);
-            setSchedule(props.route.params.schedule)
-            fetchData()
-        }
-    }, [focus])
-
     useEffect(() => {
         if (schedule) {
             if (schedule.FirstPractice) schedule.FirstPractice.localTime = new Date(`${schedule.FirstPractice?.date}T${schedule.FirstPractice?.time ?? "0:00:00"}`)
@@ -97,7 +81,19 @@ export default function SingleGPScreen(props: any) {
             if (schedule.date) schedule.localTime = new Date(`${schedule.date}T${schedule.time ?? "0:00:00"}`)    
         }
     }, [schedule])
-    
+
+    useFocusEffect(
+        useCallback(() => {
+            setReady(false)
+            setTab("race")
+            setRaceResults(undefined);
+            setSprintResults(undefined);
+            setQualifyingResults(undefined)
+            setSchedule(undefined);
+            setSchedule(props.route.params.schedule)
+            fetchData()
+        },[])
+    )
 
     return (
         <ScrollView className="bg-main-background min-h-screen py-2">
