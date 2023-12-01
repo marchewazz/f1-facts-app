@@ -1,15 +1,12 @@
-import { useState, useRef } from 'react';
-import Marker from 'react-native-maps';
+import { useRef } from 'react';
 import MapView from "react-native-maps";
 
 
 export default function TrackMarkerMap(props: { lat: string, long: string }) {
 
-    const [mapReady, setMapReady] = useState<boolean>(false)
     const mapRef = useRef(null);
     
     function animateToMarker(){
-        setMapReady(true)
         setTimeout(() => {
             if (mapRef.current) mapRef.current.animateToRegion({
                 latitude: Number(props.lat),
@@ -23,7 +20,7 @@ export default function TrackMarkerMap(props: { lat: string, long: string }) {
 
     return (
         <MapView
-        style={{width: "100%", height: 200 }}
+        style={{width: "80%", height: 200, borderRadius: 2 }}
         ref={mapRef}
         initialRegion={{
           latitude: 52.0786,

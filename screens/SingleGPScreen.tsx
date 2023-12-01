@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { useIsFocused } from "@react-navigation/native"; 
 import RaceSchedule from "../models/RaceSchedule.model";
 import { useEffect, useState } from "react";
@@ -100,23 +100,22 @@ export default function SingleGPScreen(props: any) {
     
 
     return (
-        <View>
+        <ScrollView className="bg-main-background min-h-screen py-2">
             { ready && schedule?.localTime ? (
-                <>
-                    <TrackMarkerMap lat={schedule.Circuit.Location.lat} long={schedule.Circuit.Location.long} />
-                    <Text>{`${schedule.season} ${schedule.raceName}` }</Text>
-                    <Text>{ schedule.Circuit.circuitName }</Text>
+                <View className="px-2 py-1">
+                    <Text className="text-white text-3xl font-extrabold italic">{`${schedule.season} ${schedule.raceName}` }</Text>
+                    <Text className="text-white text-xl font-extrabold">{ schedule.Circuit.circuitName }</Text>
                     { schedule.Sprint  ? (
                     <>
                     { schedule.season === "2023" ? (
                         <>
                             { schedule.FirstPractice ? (
-                                <Text>
+                                <Text className="text-white text-lg">
                                     {`First practice: ${getDate(schedule.FirstPractice.localTime)} ${schedule.FirstPractice.time ? getTime(schedule.FirstPractice.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
                             { schedule.Qualifying || qualifyingResults ? (
-                                <Text onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
+                                <Text className="text-white text-lg" onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
                                     <Text className={`${qualifyingResults ? "underline" : ""}`}>
                                         Qualifying
                                     </Text>
@@ -128,12 +127,12 @@ export default function SingleGPScreen(props: any) {
                                 </Text>
                             ) : (null)}
                             { schedule.SecondPractice ? (
-                                <Text>
+                                <Text className="text-white text-lg">
                                     {`Sprint qualifying: ${getDate(schedule.SecondPractice.localTime)} ${schedule.SecondPractice.time ? getTime(schedule.SecondPractice.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
                             { schedule.Sprint ? (
-                                <Text onPress={() => { if(sprintResults) setTab("sprint")}}>
+                                <Text className="text-white text-lg" onPress={() => { if(sprintResults) setTab("sprint")}}>
                                     <Text className={`${sprintResults ? "underline" : ""}`}>
                                         Sprint
                                     </Text>
@@ -144,12 +143,12 @@ export default function SingleGPScreen(props: any) {
                     ) : (
                         <>
                             { schedule.FirstPractice ? (
-                                <Text>
+                                <Text className="text-white text-lg">
                                     {`First practice: ${getDate(schedule.FirstPractice.localTime)} ${schedule.FirstPractice.time ? getTime(schedule.FirstPractice.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
                             { schedule.Qualifying || qualifyingResults ? (
-                                <Text onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
+                                <Text className="text-white text-lg" onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
                                     <Text className={`${qualifyingResults ? "underline" : ""}`}>
                                         Qualifying
                                     </Text>
@@ -161,12 +160,12 @@ export default function SingleGPScreen(props: any) {
                                 </Text>
                             ) : (null)}
                             { schedule.SecondPractice ? (
-                                <Text>
+                                <Text className="text-white text-lg">
                                     {`Second pracitce: ${getDate(schedule.SecondPractice.localTime)} ${schedule.SecondPractice.time ? getTime(schedule.SecondPractice.localTime) : ""}`}
                                 </Text>
                             ) : (null)}
                             { schedule.Sprint ? (
-                                <Text onPress={() => { if(sprintResults) setTab("sprint")}}>
+                                <Text className="text-white text-lg" onPress={() => { if(sprintResults) setTab("sprint")}}>
                                     <Text className={`${sprintResults ? "underline" : ""}`}>
                                         Sprint
                                     </Text>
@@ -179,22 +178,22 @@ export default function SingleGPScreen(props: any) {
             ) : (
                 <>
                     { schedule.FirstPractice ? (
-                        <Text>
+                        <Text className="text-white text-lg">
                             {`First practice: ${getDate(schedule.FirstPractice.localTime)} ${schedule.FirstPractice.time ? getTime(schedule.FirstPractice.localTime) : ""}`}
                         </Text>
                     ) : (null)}
                     { schedule.SecondPractice ? (
-                        <Text>
+                        <Text className="text-white text-lg">
                             {`Second pracitce: ${getDate(schedule.SecondPractice.localTime)} ${schedule.SecondPractice.time ? getTime(schedule.SecondPractice.localTime) : ""}`}
                         </Text>
                     ) : (null)}
                     { schedule.ThirdPractice ? (
-                        <Text>
+                        <Text className="text-white text-lg">
                             {`Thrid practice: ${getDate(schedule.ThirdPractice.localTime)} ${schedule.ThirdPractice.time ? getTime(schedule.ThirdPractice.localTime) : ""}`}
                         </Text>
                     ) : (null)}
                     { schedule.Qualifying || qualifyingResults ? (
-                        <Text onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
+                        <Text className="text-white text-lg" onPress={() => { if(qualifyingResults) setTab("qualifying")}}>
                             <Text className={`${qualifyingResults ? "underline" : ""}`}>
                                 Qualifying
                             </Text>
@@ -207,7 +206,7 @@ export default function SingleGPScreen(props: any) {
                     ) : (null)}
                 </>
                     )}
-                    <Text onPress={() => { if(raceResults) setTab("race")}}>
+                    <Text className="text-white text-lg" onPress={() => { if(raceResults) setTab("race")}}>
                         <Text className={`${raceResults ? "underline" : ""}`}>
                             Race
                         </Text>
@@ -231,14 +230,16 @@ export default function SingleGPScreen(props: any) {
                                 <GPCountdown raceDate={schedule.localTime} />
                             </>
                         )}
-                        
+                        <View className="flex flex-row justify-center">
+                            <TrackMarkerMap lat={schedule.Circuit.Location.lat} long={schedule.Circuit.Location.long} />
+                        </View>
                     </View>
-                </>
+                </View>
             ) : (
                 <Text>
                     Loading...
                 </Text>
             )}
-        </View>
+        </ScrollView>
     )
 }

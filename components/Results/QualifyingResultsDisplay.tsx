@@ -16,14 +16,17 @@ export default function QualifyingResultsDisplay(props: { qualifyingResults: Dri
 
     return (
         <View>
+            <Text className="text-2xl text-center text-white font-bold">
+                Qualifying results
+            </Text>
             <View className="flex flex-row justify-between">
                 { props.qualifyingResults[0].Q1 ? (
                     <TouchableOpacity
                     key="Q1"
-                    className={`flex h-full w-1/3 items-center ${qualifyingPart === "Q1" ? "bg-red-700" : "bg-white"}`}
+                    className={`flex h-full w-1/3 items-center pb-1 border-b ${qualifyingPart === "Q1" ? "border-main-red" : "border-white"}`}
                     accessibilityRole="button"
                     onPress={() => setQualifyingPart("Q1")}>
-                    <Text>
+                    <Text className={`${qualifyingPart === "Q1" ? "text-main-red" : "text-white"}`}>
                         Q1
                     </Text>
                 </TouchableOpacity>
@@ -31,10 +34,10 @@ export default function QualifyingResultsDisplay(props: { qualifyingResults: Dri
                 { props.qualifyingResults[0].Q2 ? (
                     <TouchableOpacity
                     key="Q2"
-                    className={`flex h-full w-1/3 items-center ${qualifyingPart === "Q2" ? "bg-red-700" : "bg-white"}`}
+                    className={`flex h-full w-1/3 items-center pb-1 border-b ${qualifyingPart === "Q2" ? "border-main-red" : "border-white"}`}
                     accessibilityRole="button"
                     onPress={() => setQualifyingPart("Q2")}>
-                    <Text>
+                    <Text className={`${qualifyingPart === "Q2" ? "text-main-red" : "text-white"}`}>
                         Q2
                     </Text>
                 </TouchableOpacity>
@@ -42,10 +45,10 @@ export default function QualifyingResultsDisplay(props: { qualifyingResults: Dri
                 { props.qualifyingResults[0].Q3 ? (
                     <TouchableOpacity
                     key="Q3"
-                    className={`flex h-full w-1/3 items-center ${qualifyingPart === "Q3" ? "bg-red-700" : "bg-white"}`}
+                    className={`flex h-full w-1/3 items-center pb-1 border-b ${qualifyingPart === "Q3" ? "border-main-red" : "border-white"}`}
                     accessibilityRole="button"
                     onPress={() => setQualifyingPart("Q3")}>
-                    <Text>
+                    <Text className={`${qualifyingPart === "Q3" ? "text-main-red" : "text-white"}`}>
                         Q3
                     </Text>
                 </TouchableOpacity>
