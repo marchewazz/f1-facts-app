@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 
 import { Dropdown } from "react-native-element-dropdown";
 import Driver from "../models/Driver.model";
@@ -69,34 +69,34 @@ export default function DriversStandingsScreen() {
                 }}
             />
             { ready ? (
-                <View className="px-2 py-1">
-                        { standings.map((driver: Driver) => {
-                            return (
-                                <View key={driver.Driver.driverId} className="flex flex-row items-center justify-between w-full my-1">
-                                    <Text className="w-10 text-2xl text-white">
-                                        { driver.positionText }
+                <ScrollView className="px-2 py-1">
+                    { standings.map((driver: Driver) => {
+                        return (
+                            <View key={driver.Driver.driverId} className="flex flex-row items-center justify-between w-full my-1">
+                                <Text className="w-10 text-2xl text-white">
+                                    { driver.positionText }
+                                </Text>
+                                <View className="flex justify-center items-start grow">
+                                    <Text className="text-lg text-white">
+                                        { driver.Driver.givenName } { driver.Driver.familyName }
                                     </Text>
-                                    <View className="flex justify-center items-start grow">
-                                        <Text className="text-lg text-white">
-                                            { driver.Driver.givenName } { driver.Driver.familyName }
-                                        </Text>
-                                        <Text className="text-lg text-white">
-                                            { driver.Constructors.length > 1 ? (
-                                                driver.Constructors.map((constructor, index) => {
-                                                    return `${constructor.name}${index != driver.Constructors.length - 1 ? "/" : ""}` 
-                                                })
-                                            ) : (
-                                                driver.Constructors[0].name
-                                            )}
-                                        </Text>
-                                    </View>
-                                    <Text className="text-2xl justify-self-end text-white">
-                                        { driver.points }
+                                    <Text className="text-lg text-white">
+                                        { driver.Constructors.length > 1 ? (
+                                            driver.Constructors.map((constructor, index) => {
+                                                return `${constructor.name}${index != driver.Constructors.length - 1 ? "/" : ""}` 
+                                            })
+                                        ) : (
+                                            driver.Constructors[0].name
+                                        )}
                                     </Text>
                                 </View>
-                            )
-                        })}
-                    </View>
+                                <Text className="text-2xl justify-self-end text-white">
+                                    { driver.points }
+                                </Text>
+                            </View>
+                        )
+                    })}
+                </ScrollView>
             ) : (
                 <Text className="text-white p-2 text-2xl">
                     Loading...

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import RaceSchedule from "../../models/RaceSchedule.model";
 import { getDate } from "../../util/dateFunctions";
@@ -68,7 +68,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
                 }}
             />
             { ready ? (
-                <View className="px-2 py-1">
+                <ScrollView className="px-2 py-1">
                     { calendar.map((race: RaceSchedule) => {
                         return (
                             <View key={`${race.season}-${race.round}`} className="flex flex-row items-center justify-between w-full my-1">
@@ -81,7 +81,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
                             </View>
                         )
                     })}
-                </View>
+                </ScrollView>
             ) : (
                 <Text className="text-white p-2 text-2xl">
                     Loading...
