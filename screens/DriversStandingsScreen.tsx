@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 
 import { Dropdown } from "react-native-element-dropdown";
 import Driver from "../models/Driver.model";
@@ -56,7 +56,7 @@ export default function DriversStandingsScreen() {
     }, [])
 
     return (
-        <View className="bg-main-background min-h-screen">
+        <View className="bg-main-background pb-2" style={{ height: Dimensions.get("window").height - 119 }}>
             <Dropdown 
                 className="bg-white p-2"
                 data={years} 

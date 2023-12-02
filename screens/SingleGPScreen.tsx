@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import { useFocusEffect } from "@react-navigation/native"; 
 import RaceSchedule from "../models/RaceSchedule.model";
 import { useCallback, useEffect, useState } from "react";
@@ -96,7 +96,7 @@ export default function SingleGPScreen(props: any) {
     )
 
     return (
-        <ScrollView className="bg-main-background min-h-screen py-2">
+        <ScrollView className="bg-main-background py-2" style={{ height: Dimensions.get("window").height - 119 }}>
             { ready && schedule?.localTime ? (
                 <View className="px-2 py-1">
                     <Text className="text-white text-3xl font-extrabold italic">{`${schedule.season} ${schedule.raceName}` }</Text>

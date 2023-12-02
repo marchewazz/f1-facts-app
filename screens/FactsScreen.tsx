@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Vibration } from "react-native";
+import { View, Text, Vibration, Dimensions } from "react-native";
 
 import { Accelerometer } from 'expo-sensors';
 import { useFocusEffect } from "@react-navigation/native";
@@ -44,7 +44,7 @@ export default function FactsScreen() {
     )
 
     return (
-        <View className="w-full h-full p-5 flex justify-center items-center bg-main-background">
+        <View className="w-full h-full p-5 flex justify-center items-center bg-main-background" style={{ height: Dimensions.get("window").height - 119 }}>
             <Text className="text-4xl text-center text-white italic font-extrabold">{ facts[factIndex] }</Text>
         </View>
     )

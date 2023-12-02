@@ -55,7 +55,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
     }, [])
     
     return (
-        <View className="bg-main-background min-h-screen">
+        <View className="bg-main-background pb-2 h-full">
             <Dropdown 
                 className="bg-white p-2"
                 data={years} 
