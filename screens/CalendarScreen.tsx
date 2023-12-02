@@ -5,7 +5,7 @@ import { Dimensions } from 'react-native';
 
 export default function CalendarScreen(props: any) {
     return (
-        <View className="bg-main-background" style={{ height: Dimensions.get("window").height - 119 }}>
+        <View className="bg-main-background pb-2" style={{ height: Dimensions.get("window").height - 119, maxHeight: Dimensions.get("window").height - 119 }}>
             <NextRaceCountdown navigation={props.navigation} />
             <CalendarDisplay navigation={props.navigation} />
         </View>

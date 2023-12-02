@@ -26,7 +26,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
             setReady(false)
             const response = await fetch(`http://ergast.com/api/f1/${value.year}.json`)
             const json = await response.json();
-           
+        
             setCalendar(json.MRData.RaceTable.Races as RaceSchedule[]);
           } catch (error) {
             console.error(error);
@@ -55,7 +55,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
     }, [])
     
     return (
-        <View className="bg-main-background pb-2 h-full">
+        <>
             <Dropdown 
                 className="bg-white p-2"
                 data={years} 
@@ -70,6 +70,8 @@ export default function CalendarDisplay(props: { navigation: any }) {
             { ready ? (
                 <ScrollView className="px-2 py-1">
                     { calendar.map((race: RaceSchedule) => {
+                        console.log(race.localTime);
+                        
                         return (
                             <View key={`${race.season}-${race.round}`} className="flex flex-row items-center justify-between w-full my-1">
                                 <Text className="text-lg text-white underline" onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
@@ -87,6 +89,6 @@ export default function CalendarDisplay(props: { navigation: any }) {
                     Loading...
                 </Text>
             )}
-        </View>
+        </>
     )
 }
