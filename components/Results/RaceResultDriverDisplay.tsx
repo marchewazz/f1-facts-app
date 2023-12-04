@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity, ToastAndroid } from "react-native";
 import { DriverResult } from "../../models/RaceResults.model";
 import getPositionText from "../../util/positionText";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -6,16 +6,20 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { DataTable } from "react-native-paper";
 
 export default function RaceResultDriverDisplay(props: { driver: DriverResult, index: number, season: string }) {
-  
+    
+    function showToast() {
+        ToastAndroid.show(`Lap time: ${props.driver.FastestLap.Time.time}`, ToastAndroid.LONG);
+    }
+
     return (
         <DataTable.Row className={`px-1 ${props.index % 2 == 1 ? "bg-white" : "bg-main-red"}`}>
             { props.season > "2003" ? (
                 <DataTable.Cell style={{ width: 50, flex: 1, justifyContent: "center" }}>
                     { props.driver.FastestLap ? (
                         props.driver.FastestLap.rank === "1" ? (
-                            <View className="bg-[#BC23D2] rounded p-1 w-7 h-7 flex items-center justify-center">
+                            <TouchableOpacity onPress={showToast} className="bg-[#BC23D2] rounded p-1 w-7 h-7 flex items-center justify-center">
                                 <FontAwesomeIcon icon={faClock} color="#FFF" size={20} />
-                            </View>
+                            </TouchableOpacity>
                         ) : (null)
                     ):(null)}
                 </DataTable.Cell>
