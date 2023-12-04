@@ -1,7 +1,7 @@
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import { View, Text, ScrollView, Dimensions, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import RaceSchedule from "../models/RaceSchedule.model";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getDate, getTime } from "../util/dateFunctions";
 import RaceResults from "../models/RaceResults.model";
 import RaceResultsDisplay from "../components/Results/RaceResultsDisplay";
@@ -10,6 +10,9 @@ import GPCountdown from "../components/SingleGP/GPCountdown";
 import QualifyingResults from "../models/QualifyingResults.model";
 import QualifyingResultsDisplay from "../components/Results/QualifyingResultsDisplay";
 import TrackMarkerMap from "../components/SingleGP/TrackMarkerMap";
+import { ViewPortDetectorProvider } from "react-native-viewport-detector";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 export default function SingleGPScreen(props: any) {
   const [schedule, setSchedule] = useState<RaceSchedule>();
@@ -20,6 +23,9 @@ export default function SingleGPScreen(props: any) {
   const [tab, setTab] = useState<string>("race");
 
   const [ready, setReady] = useState<boolean>(false);
+
+  const mapRef = useRef(null);
+  const scrollViewRef = useRef(null);
 
   async function fetchRaceResults() {
     try {
@@ -154,17 +160,25 @@ export default function SingleGPScreen(props: any) {
   );
 
   return (
-    <ScrollView
+    <ViewPortDetectorProvider>
+      <ScrollView
+      ref={scrollViewRef}
       className="bg-main-background py-2"
       style={{ height: Dimensions.get("window").height - 119 }}
-    >
+      >
       {ready && schedule?.localTime ? (
         <View className="py-1">
           <View className="px-2">
             <Text className="text-white text-3xl font-extrabold italic">{`${schedule.season} ${schedule.raceName}`}</Text>
-            <Text className="text-white text-xl font-extrabold">
-              {schedule.Circuit.circuitName}
-            </Text>
+            <View className="flex flex-row justify-between items-center my-2">
+              <Text className="text-white text-2xl font-extrabold">
+                {schedule.Circuit.circuitName}
+              </Text>
+              <TouchableOpacity className="bg-white p-2 rounded-xl" onPress={() => { scrollViewRef.current.scrollTo({ x: 0, y: Dimensions.get("window").height + mapRef.current.props.style.height, animated: true }) }}>
+                <FontAwesomeIcon icon={faLocationDot} size={30} color="#FF1801" />
+              </TouchableOpacity>
+            </View>
+            
             {schedule.Sprint ? (
               <>
                 {schedule.season === "2023" ? (
@@ -392,10 +406,11 @@ export default function SingleGPScreen(props: any) {
                 <GPCountdown raceDate={schedule.localTime} />
               </>
             )}
-            <View className="flex flex-row justify-center">
+            <View className="flex flex-row justify-center mt-2 mx-2 mb-5 rounded-2xl overflow-hidden">
               <TrackMarkerMap
                 lat={schedule.Circuit.Location.lat}
                 long={schedule.Circuit.Location.long}
+                mapRef={mapRef}
               />
             </View>
           </View>
@@ -403,6 +418,7 @@ export default function SingleGPScreen(props: any) {
       ) : (
         <Text>Loading...</Text>
       )}
-    </ScrollView>
+      </ScrollView>
+    </ViewPortDetectorProvider>
   );
 }

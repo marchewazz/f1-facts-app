@@ -70,8 +70,6 @@ export default function CalendarDisplay(props: { navigation: any }) {
             { ready ? (
                 <ScrollView className="px-2 py-1">
                     { calendar.map((race: RaceSchedule) => {
-                        console.log(race.localTime);
-                        
                         return (
                             <View key={`${race.season}-${race.round}`} className="flex flex-row items-center justify-between w-full my-1">
                                 <Text className="text-lg text-white underline" onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
