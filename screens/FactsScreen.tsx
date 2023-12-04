@@ -3,6 +3,7 @@ import { View, Text, Vibration, Dimensions } from "react-native";
 
 import { Accelerometer } from 'expo-sensors';
 import { useFocusEffect } from "@react-navigation/native";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function FactsScreen() {
 

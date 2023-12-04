@@ -13,6 +13,7 @@ import TrackMarkerMap from "../components/SingleGP/TrackMarkerMap";
 import { ViewPortDetectorProvider } from "react-native-viewport-detector";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function SingleGPScreen(props: any) {
   const [schedule, setSchedule] = useState<RaceSchedule>();
@@ -416,7 +417,9 @@ export default function SingleGPScreen(props: any) {
           </View>
         </View>
       ) : (
-        <Text>Loading...</Text>
+        <View style={{ height: Dimensions.get("window").height - 119 }} className="flex justify-center">
+          <LoadingComponent />
+        </View>
       )}
       </ScrollView>
     </ViewPortDetectorProvider>

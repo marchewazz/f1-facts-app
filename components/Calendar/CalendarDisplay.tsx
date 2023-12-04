@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import RaceSchedule from "../../models/RaceSchedule.model";
 import { getDate } from "../../util/dateFunctions";
+import LoadingComponent from "../LoadingComponent";
 
 export default function CalendarDisplay(props: { navigation: any }) {
     const [years, setYears] = useState<{
@@ -83,9 +84,9 @@ export default function CalendarDisplay(props: { navigation: any }) {
                     })}
                 </ScrollView>
             ) : (
-                <Text className="text-white p-2 text-2xl">
-                    Loading...
-                </Text>
+                <View style={{ height: Dimensions.get("window").height - 119 }} className="flex justify-center">
+                    <LoadingComponent />
+                </View>
             )}
         </>
     )

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 
 import { Dropdown } from "react-native-element-dropdown";
 import Driver from "../models/Driver.model";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function DriversStandingsScreen() {
 
@@ -98,9 +99,9 @@ export default function DriversStandingsScreen() {
                     })}
                 </ScrollView>
             ) : (
-                <Text className="text-white p-2 text-2xl">
-                    Loading...
-                </Text>
+                <View style={{ height: Dimensions.get("window").height - 119 }} className="flex justify-center">
+                    <LoadingComponent />
+                </View>
             )}
         </View>
     )

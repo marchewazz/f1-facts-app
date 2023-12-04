@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import RaceSchedule from "../../models/RaceSchedule.model";
 import { useFocusEffect } from "@react-navigation/native";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import LoadingComponent from "../LoadingComponent";
 
 
 export default function NextRaceCountdown(this: any, props: { navigation: any }) {
@@ -179,9 +180,7 @@ export default function NextRaceCountdown(this: any, props: { navigation: any })
                 ) : (null)}
                 </>
             ) : (
-                <Text>
-                    Loading...
-                </Text>
+                <LoadingComponent />
             )}
         </View>
     )

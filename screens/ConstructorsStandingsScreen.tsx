@@ -3,6 +3,7 @@ import Constructor from "../models/Constructor.model";
 import { useCallback, useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { useFocusEffect } from "@react-navigation/native";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function ConstructorsStandingsScreen() {
     const [years, setYears] = useState<{
@@ -107,9 +108,9 @@ export default function ConstructorsStandingsScreen() {
                     })}
                 </ScrollView>
             ) : (
-                <Text className="text-lg text-white">
-                    Loading...
-                </Text>
+                <View style={{ height: Dimensions.get("window").height - 119 }} className="flex justify-center">
+                    <LoadingComponent />
+                </View>
             )}
         </View>
     )
