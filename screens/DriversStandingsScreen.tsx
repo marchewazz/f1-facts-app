@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 
 import { Dropdown } from "react-native-element-dropdown";
 import Driver from "../models/Driver.model";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function DriversStandingsScreen() {
 
@@ -56,8 +57,9 @@ export default function DriversStandingsScreen() {
     }, [])
 
     return (
-        <View>
+        <View className="bg-main-background pb-2" style={{ height: Dimensions.get("window").height - 119 }}>
             <Dropdown 
+                className="bg-white p-2"
                 data={years} 
                 labelField="year"
                 valueField="year"
@@ -68,27 +70,38 @@ export default function DriversStandingsScreen() {
                 }}
             />
             { ready ? (
-                <>
+                <ScrollView className="px-2 py-1">
                     { standings.map((driver: Driver) => {
                         return (
-                            <View key={driver.Driver.driverId} className="flex flex-row justify-between">
-                                <Text>
+                            <View key={driver.Driver.driverId} className="flex flex-row items-center justify-between w-full my-1">
+                                <Text className="w-10 text-2xl text-white">
                                     { driver.positionText }
                                 </Text>
-                                <Text>
-                                    { driver.Driver.givenName } { driver.Driver.familyName }
-                                </Text>
-                                <Text>
+                                <View className="flex justify-center items-start grow">
+                                    <Text className="text-lg text-white">
+                                        { driver.Driver.givenName } { driver.Driver.familyName }
+                                    </Text>
+                                    <Text className="text-lg text-white">
+                                        { driver.Constructors.length > 1 ? (
+                                            driver.Constructors.map((constructor, index) => {
+                                                return `${constructor.name}${index != driver.Constructors.length - 1 ? "/" : ""}` 
+                                            })
+                                        ) : (
+                                            driver.Constructors[0].name
+                                        )}
+                                    </Text>
+                                </View>
+                                <Text className="text-2xl justify-self-end text-white text-right">
                                     { driver.points }
                                 </Text>
                             </View>
                         )
                     })}
-                </>
+                </ScrollView>
             ) : (
-                <Text>
-                    Loading...
-                </Text>
+                <View style={{ height: Dimensions.get("window").height - 119 }} className="flex justify-center">
+                    <LoadingComponent />
+                </View>
             )}
         </View>
     )

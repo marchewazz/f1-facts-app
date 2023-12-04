@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import RaceSchedule from "../../models/RaceSchedule.model";
 import { getDate } from "../../util/dateFunctions";
+import LoadingComponent from "../LoadingComponent";
 
 export default function CalendarDisplay(props: { navigation: any }) {
     const [years, setYears] = useState<{
@@ -26,7 +27,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
             setReady(false)
             const response = await fetch(`http://ergast.com/api/f1/${value.year}.json`)
             const json = await response.json();
-           
+        
             setCalendar(json.MRData.RaceTable.Races as RaceSchedule[]);
           } catch (error) {
             console.error(error);
@@ -53,10 +54,11 @@ export default function CalendarDisplay(props: { navigation: any }) {
 
         setYears(years)
     }, [])
-
+    
     return (
-        <View>
+        <>
             <Dropdown 
+                className="bg-white p-2"
                 data={years} 
                 labelField="year"
                 valueField="year"
@@ -67,25 +69,25 @@ export default function CalendarDisplay(props: { navigation: any }) {
                 }}
             />
             { ready ? (
-                <>
+                <ScrollView className="px-2 py-1">
                     { calendar.map((race: RaceSchedule) => {
                         return (
-                            <View key={`${race.season}-${race.round}`} className="flex flex-row justify-between">
-                                <Text onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
+                            <View key={`${race.season}-${race.round}`} className="flex flex-row items-center justify-between w-full my-1">
+                                <Text className="text-lg text-white underline" onPress={() => props.navigation.navigate("SingleGPScreen", { schedule: race })}>
                                     { race.raceName }
                                 </Text>
-                                <Text>
+                                <Text className="text-lg text-white">
                                     { getDate(new Date(`${race.date}T${race.time ?? "0:00:00"}`)) }
                                 </Text>
                             </View>
                         )
                     })}
-                </>
+                </ScrollView>
             ) : (
-                <Text>
-                    Loading...
-                </Text>
+                <View style={{ height: Dimensions.get("window").height - 119 }} className="flex justify-center">
+                    <LoadingComponent />
+                </View>
             )}
-        </View>
+        </>
     )
 }

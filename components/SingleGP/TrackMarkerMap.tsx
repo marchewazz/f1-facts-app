@@ -1,36 +1,48 @@
-import { useState, useRef } from 'react';
-import Marker from 'react-native-maps';
-import MapView from "react-native-maps";
+import React, { useEffect, useRef, useState } from 'react';
+import { Dimensions } from 'react-native';
+import MapView, { Marker } from "react-native-maps";
+import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 
+export default function TrackMarkerMap(props: { lat: string, long: string, mapRef: React.MutableRefObject<null> }) {
 
-export default function TrackMarkerMap(props: { lat: string, long: string }) {
+    const [mapReady, setMapReady] = useState<boolean>(false);
+    const [inViewPort, setInViewPort] = useState<boolean>(false);
+    const [moveOnFocus, setMoveOnFocus] = useState<boolean>(true);
 
-    const [mapReady, setMapReady] = useState<boolean>(false)
-    const mapRef = useRef(null);
-    
-    function animateToMarker(){
-        setMapReady(true)
-        setTimeout(() => {
-            if (mapRef.current) mapRef.current.animateToRegion({
-                latitude: Number(props.lat),
-                longitude: Number(props.long),
-                latitudeDelta: .01,
-                longitudeDelta: .01,
-              }, 3000)
-        }, 500);
-        
+    function moveToMarker() {
+        if (props.mapRef.current) props.mapRef.current.animateToRegion({
+            latitude: Number(props.lat),
+            longitude: Number(props.long),
+            latitudeDelta: .02,
+            longitudeDelta: .02,
+        }, 400)
     }
+    
+    useEffect(() => {
+        if (inViewPort && moveOnFocus) {
+            moveToMarker()    
+            setMoveOnFocus(false)
+        }
+        if (!inViewPort) {
+            setMoveOnFocus(true)
+        }
+    }, [inViewPort])
+    
 
     return (
-        <MapView
-        style={{width: "100%", height: 200 }}
-        ref={mapRef}
-        initialRegion={{
-          latitude: 52.0786,
-          longitude: -1.01694,
-          latitudeDelta: .01,
-        longitudeDelta: .01,
-        }}        
-        onMapReady={animateToMarker} />
+        <InViewPort onChange={setInViewPort}>
+            <MapView
+            style={{ width: Dimensions.get('window').width, height: 300 }}
+            ref={props.mapRef}
+            initialRegion={{
+              latitude: 52.0786,
+              longitude: -1.01694,
+              latitudeDelta: .02,
+                longitudeDelta: .02,
+            }}        
+            onMapReady={() => setMapReady(true)}>
+                { mapReady && <Marker coordinate={{ latitude: Number(props.lat), longitude: Number(props.long)}} />}
+            </MapView>
+        </InViewPort>
     )
 }
