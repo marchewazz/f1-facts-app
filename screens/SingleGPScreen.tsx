@@ -172,7 +172,7 @@ export default function SingleGPScreen(props: any) {
           <View className="px-2">
             <Text className="text-white text-3xl font-extrabold italic">{`${schedule.season} ${schedule.raceName}`}</Text>
             <View className="flex flex-row justify-between items-center my-2">
-              <Text className="text-white text-2xl font-extrabold">
+              <Text className="text-white text-2xl font-extrabold w-4/5">
                 {schedule.Circuit.circuitName}
               </Text>
               <TouchableOpacity className="bg-white p-2 rounded-xl" onPress={() => { scrollViewRef.current.scrollTo({ x: 0, y: Dimensions.get("window").height + mapRef.current.props.style.height, animated: true }) }}>
