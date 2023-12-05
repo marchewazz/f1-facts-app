@@ -10,7 +10,6 @@ import GPCountdown from "../components/SingleGP/GPCountdown";
 import QualifyingResults from "../models/QualifyingResults.model";
 import QualifyingResultsDisplay from "../components/Results/QualifyingResultsDisplay";
 import TrackMarkerMap from "../components/SingleGP/TrackMarkerMap";
-import { ViewPortDetectorProvider } from "react-native-viewport-detector";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import LoadingComponent from "../components/LoadingComponent";
@@ -161,7 +160,6 @@ export default function SingleGPScreen(props: any) {
   );
 
   return (
-    <ViewPortDetectorProvider>
       <ScrollView
       ref={scrollViewRef}
       className="bg-main-background py-2"
@@ -422,6 +420,6 @@ export default function SingleGPScreen(props: any) {
         </View>
       )}
       </ScrollView>
-    </ViewPortDetectorProvider>
+   
   );
 }

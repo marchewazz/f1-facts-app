@@ -1,38 +1,39 @@
 {
-    "name": "f1-facts-app",
-    "version": "1.0.0",
-    "main": "node_modules/expo/AppEntry.js",
-    "scripts": {
-        "start": "expo start",
-        "android": "expo start --android",
-        "ios": "expo start --ios",
-        "web": "expo start --web"
-    },
-    "dependencies": {
-        "@coffeebeanslabs/react-native-inviewport": "^0.2.0",
-        "@expo/webpack-config": "^19.0.0",
-        "@fortawesome/free-solid-svg-icons": "^6.5.1",
-        "@fortawesome/react-native-fontawesome": "^0.3.0",
-        "@react-navigation/bottom-tabs": "^6.5.11",
-        "@react-navigation/native": "^6.1.9",
-        "expo": "~49.0.15",
-        "expo-sensors": "~12.3.0",
-        "expo-status-bar": "~1.6.0",
-        "nativewind": "^2.0.11",
-        "react": "18.2.0",
-        "react-dom": "^18.2.0",
-        "react-native": "0.72.6",
-        "react-native-circular-progress": "^1.3.9",
-        "react-native-element-dropdown": "^2.10.0",
-        "react-native-maps": "^1.8.0",
-        "react-native-paper": "^5.11.3",
-        "tailwindcss": "3.3.2"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.20.0",
-        "@types/react": "~18.2.14",
-        "@types/react-native-table-component": "^1.2.7",
-        "typescript": "^5.1.3"
-    },
-    "private": true
+  "name": "f1-facts-app",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@coffeebeanslabs/react-native-inviewport": "^0.2.0",
+    "@expo/webpack-config": "^19.0.0",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-native-fontawesome": "^0.3.0",
+    "@react-navigation/bottom-tabs": "^6.5.11",
+    "@react-navigation/native": "^6.1.9",
+    "expo": "~49.0.15",
+    "expo-sensors": "~12.3.0",
+    "expo-status-bar": "~1.6.0",
+    "nativewind": "^2.0.11",
+    "react": "18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "0.72.6",
+    "react-native-circular-progress": "^1.3.9",
+    "react-native-element-dropdown": "^2.10.0",
+    "react-native-maps": "^1.8.0",
+    "react-native-paper": "^5.11.3",
+    "tailwindcss": "3.3.2",
+    "expo-clipboard": "~4.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.2.14",
+    "@types/react-native-table-component": "^1.2.7",
+    "typescript": "^5.1.3"
+  },
+  "private": true
 }

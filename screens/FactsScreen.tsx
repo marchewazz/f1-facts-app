@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { View, Text, Vibration, Dimensions } from "react-native";
-
+import { View, Text, Vibration, Dimensions, TouchableOpacity, ToastAndroid } from "react-native";
+import * as Clipboard from 'expo-clipboard';
 import { Accelerometer } from 'expo-sensors';
 import { useFocusEffect } from "@react-navigation/native";
-import LoadingComponent from "../components/LoadingComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 
 export default function FactsScreen() {
 
@@ -45,8 +46,11 @@ export default function FactsScreen() {
     )
 
     return (
-        <View className="w-full h-full p-5 flex justify-center items-center bg-main-background" style={{ height: Dimensions.get("window").height - 119 }}>
+        <View className="w-full h-full flex justify-center items-center bg-main-background relative" style={{ height: Dimensions.get("window").height - 119 }}>
             <Text className="text-4xl text-center text-white italic font-extrabold">{ facts[factIndex] }</Text>
+            <TouchableOpacity onPress={async () =>  { await Clipboard.setStringAsync(facts[factIndex]); ToastAndroid.show("Copied!", ToastAndroid.LONG); }} className="flex items-center justify-center absolute py-3 bottom-0 bg-white w-full">
+                <FontAwesomeIcon icon={faCopy} size={25} />
+            </TouchableOpacity>
         </View>
     )
 }
