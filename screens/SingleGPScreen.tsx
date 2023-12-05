@@ -420,6 +420,5 @@ export default function SingleGPScreen(props: any) {
         </View>
       )}
       </ScrollView>
-   
   );
 }
