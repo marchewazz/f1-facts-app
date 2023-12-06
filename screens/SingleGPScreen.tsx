@@ -146,7 +146,7 @@ export default function SingleGPScreen(props: any) {
 
   useFocusEffect(
     useCallback(() => {
-      setSchedule(props.route.params.schedule);
+      setSchedule(JSON.parse(JSON.stringify(props.route.params.schedule)));
       fetchData();
       return () => {
         setReady(false);
@@ -156,7 +156,7 @@ export default function SingleGPScreen(props: any) {
         setQualifyingResults(undefined);
         setSchedule(undefined);
       }
-    }, [])
+    }, [props.route])
   );
 
   return (

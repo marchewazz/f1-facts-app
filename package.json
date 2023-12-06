@@ -16,6 +16,7 @@
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "expo": "~49.0.15",
+    "expo-clipboard": "~4.3.1",
     "expo-sensors": "~12.3.0",
     "expo-status-bar": "~1.6.0",
     "nativewind": "^2.0.11",
@@ -26,11 +27,11 @@
     "react-native-element-dropdown": "^2.10.0",
     "react-native-maps": "^1.8.0",
     "react-native-paper": "^5.11.3",
-    "tailwindcss": "3.3.2",
-    "expo-clipboard": "~4.3.1"
+    "tailwindcss": "3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/node": "^17.0.29",
     "@types/react": "~18.2.14",
     "@types/react-native-table-component": "^1.2.7",
     "typescript": "^5.1.3"
