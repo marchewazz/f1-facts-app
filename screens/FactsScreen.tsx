@@ -29,7 +29,7 @@ export default function FactsScreen() {
 
     useFocusEffect(
         useCallback(() => {
-            Accelerometer.setUpdateInterval(1000)
+            Accelerometer.setUpdateInterval(3000)
             Accelerometer.addListener(({ x, y, z }) => {
                 const acceleration = Math.sqrt(x * x + y * y + z * z);
             
