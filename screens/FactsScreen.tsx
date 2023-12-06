@@ -29,17 +29,18 @@ export default function FactsScreen() {
 
     useFocusEffect(
         useCallback(() => {
-            Accelerometer.setUpdateInterval(3000)
             Accelerometer.addListener(({ x, y, z }) => {
                 const acceleration = Math.sqrt(x * x + y * y + z * z);
             
                 const sensibility = 1.8;
                 if (acceleration >= sensibility) {
-                  changeFact();
+                    Accelerometer.setUpdateInterval(3000)
+                    changeFact();
                 }
             })
             
             return () => {
+                Accelerometer.setUpdateInterval(0)
                 Accelerometer.removeAllListeners() 
             }
         },[])
