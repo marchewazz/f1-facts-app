@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useContext } from "react";
 import { View, Text, Vibration, Dimensions, TouchableOpacity, ToastAndroid } from "react-native";
 import * as Clipboard from 'expo-clipboard';
 import { Accelerometer } from 'expo-sensors';
@@ -8,6 +8,7 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Image } from 'expo-image';
 import { Audio } from 'expo-av';
 import { useAssets } from "expo-asset/build/AssetHooks";
+import AppContext from "../AppContext";
 
 export default function FactsScreen() {
 
@@ -27,14 +28,16 @@ export default function FactsScreen() {
 
     const [buttonCooldown, setButtonCooldown] = useState<boolean>(false);
 
+    const { audioOn, vibrationOn } = useContext(AppContext);
+
     async function changeFact() {
         while (true) {
             const tempIndex = Math.floor(Math.random() * facts.length)
             if (tempIndex != factIndex) {
                 setButtonCooldown(true)
                 setFactIndex(tempIndex)
-                Vibration.vibrate(1000, false);
-                (await Audio.Sound.createAsync(require('../assets/f1-sound.mp3'))).sound.playAsync()
+                if (vibrationOn) Vibration.vibrate(1000, false);
+                if (audioOn) (await Audio.Sound.createAsync(require('../assets/f1-sound.mp3'))).sound.playAsync()
                 setTimeout(() => {
                     setButtonCooldown(false)
                 }, 3000);
