@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import MapView, { Marker } from "react-native-maps";
 import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 
@@ -30,7 +30,7 @@ export default function TrackMarkerMap(props: { lat: string, long: string, mapRe
     
 
     return (
-        <InViewPort onChange={setInViewPort}>
+        <View className="relative">
             <MapView
             style={{ width: Dimensions.get('window').width, height: 300 }}
             ref={props.mapRef}
@@ -43,6 +43,10 @@ export default function TrackMarkerMap(props: { lat: string, long: string, mapRe
             onMapReady={() => setMapReady(true)}>
                 { mapReady && <Marker coordinate={{ latitude: Number(props.lat), longitude: Number(props.long)}} />}
             </MapView>
-        </InViewPort>
+            <InViewPort onChange={setInViewPort}>
+                <View className="h-2 w-full absolute top-0" />
+            </InViewPort>
+        </View>
+        
     )
 }
