@@ -52,7 +52,8 @@ export default function NextRaceCountdown(this: any, props: { navigation: any })
             seconds: 1
         };
         
-        let raceDate = new Date(`${raceSchedule?.date}T${raceSchedule?.time}`)
+        let raceDate = new Date(`${raceSchedule?.date}T${raceSchedule?.time || "0:00:00"}`)
+        console.log(raceDate);
         
         let delta = Math.abs(raceDate.getTime() - new Date().getTime()) / 1000
         
@@ -76,11 +77,11 @@ export default function NextRaceCountdown(this: any, props: { navigation: any })
 
     useEffect(() => {
         if (raceSchedule) {
+            countTime()
             intervalRef.current = setInterval(() => {
                 countTime()
             }, 60000);
         }
-        
     }, [raceSchedule]) 
 
     useFocusEffect(
