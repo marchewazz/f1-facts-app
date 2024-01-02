@@ -61,9 +61,17 @@ export default function FactsScreen() {
             { assets ? (
                 <Image className="w-full h-full absolute -z-50 opacity-30" source={assets[factIndex]} />
             ) : (null)}
-            <TouchableOpacity onPress={async () =>  { await Clipboard.setStringAsync(facts[factIndex]); ToastAndroid.show("Copied!", ToastAndroid.LONG); }} className="flex items-center justify-center absolute py-3 bottom-0 bg-white w-full">
-                <FontAwesomeIcon icon={faCopy} size={25} />
-            </TouchableOpacity>
+            <View className="w-full absolute bottom-0 flex flex-row">
+                <TouchableOpacity onPress={changeFact} className="flex items-center justify-center py-3 bg-white w-1/2">
+                    <Text className="font-extrabold text-lg">
+                        RANDOMIZE
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={async () =>  { await Clipboard.setStringAsync(facts[factIndex]); ToastAndroid.show("Copied!", ToastAndroid.LONG); }} className="flex items-center justify-center py-3 bg-white w-1/2">
+                    <FontAwesomeIcon icon={faCopy} size={25} />
+                </TouchableOpacity>
+            </View>
+          
         </View>
     )
 }
