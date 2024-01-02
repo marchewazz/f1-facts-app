@@ -6,12 +6,11 @@ import { useFocusEffect } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Image } from 'expo-image';
-import Fact from "../models/Fact.model";
 import { useAssets } from "expo-asset/build/AssetHooks";
 
 export default function FactsScreen() {
 
-    const [assets, error] = useAssets([
+    const [imagesAssets, error] = useAssets([
         require('../assets/Fernando_Alonso_2010_Australia.jpg'), 
         require('../assets/2011_Canadian_GP_Winner.jpg'), 
         require('../assets/Kimi_Raikkonen_Ferrari_F1_Team.jpg')
@@ -58,8 +57,8 @@ export default function FactsScreen() {
     return (
         <View className="w-full h-full flex justify-center items-center bg-main-background relative" style={{ height: Dimensions.get("window").height - 119 }}>
             <Text className="text-4xl text-center text-white italic font-extrabold px-2">{ facts[factIndex] }</Text>
-            { assets ? (
-                <Image className="w-full h-full absolute -z-50 opacity-30" source={assets[factIndex]} />
+            { imagesAssets ? (
+                <Image className="w-full h-full absolute -z-50 opacity-30" source={imagesAssets[factIndex]} />
             ) : (null)}
             <View className="w-full absolute bottom-0 flex flex-row">
                 <TouchableOpacity onPress={changeFact} className="flex items-center justify-center py-3 bg-white w-1/2">
