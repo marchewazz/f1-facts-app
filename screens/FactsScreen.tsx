@@ -6,11 +6,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Image } from 'expo-image';
+import { Audio } from 'expo-av';
 import { useAssets } from "expo-asset/build/AssetHooks";
 
 export default function FactsScreen() {
 
-    const [imagesAssets, error] = useAssets([
+    const [imagesAssets, imagesError] = useAssets([
         require('../assets/Fernando_Alonso_2010_Australia.jpg'), 
         require('../assets/2011_Canadian_GP_Winner.jpg'), 
         require('../assets/Kimi_Raikkonen_Ferrari_F1_Team.jpg')
@@ -24,12 +25,19 @@ export default function FactsScreen() {
 
     const [factIndex, setFactIndex] = useState<number>(0)
 
-    function changeFact() {
+    const [buttonCooldown, setButtonCooldown] = useState<boolean>(false);
+
+    async function changeFact() {
         while (true) {
             const tempIndex = Math.floor(Math.random() * facts.length)
             if (tempIndex != factIndex) {
+                setButtonCooldown(true)
                 setFactIndex(tempIndex)
                 Vibration.vibrate(1000, false);
+                (await Audio.Sound.createAsync(require('../assets/f1-sound.mp3'))).sound.playAsync()
+                setTimeout(() => {
+                    setButtonCooldown(false)
+                }, 3000);
                 break
             }
         }
@@ -61,7 +69,7 @@ export default function FactsScreen() {
                 <Image className="w-full h-full absolute -z-50 opacity-30" source={imagesAssets[factIndex]} />
             ) : (null)}
             <View className="w-full absolute bottom-0 flex flex-row">
-                <TouchableOpacity onPress={changeFact} className="flex items-center justify-center py-3 bg-white w-1/2">
+                <TouchableOpacity disabled={buttonCooldown} onPress={changeFact} className={`flex items-center justify-center py-3 bg-white w-1/2 ${buttonCooldown ? "opacity-50" : ""}`}>
                     <Text className="font-extrabold text-lg">
                         RANDOMIZE
                     </Text>
