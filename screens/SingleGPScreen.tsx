@@ -135,15 +135,7 @@ export default function SingleGPScreen(props: any) {
           `${schedule.date}T${schedule.time ?? "0:00:00"}`
         );
     }
-  }, [schedule]);
-
-  useEffect(() => {
-    if (ready && schedule?.localTime)
-    console.log();
-    console.log(ready, schedule?.localTime);
-    
-  }, [ready, schedule?.localTime])
-  
+  }, [schedule]);  
 
   useFocusEffect(
     useCallback(() => {

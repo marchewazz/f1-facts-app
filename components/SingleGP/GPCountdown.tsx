@@ -54,15 +54,6 @@ export default function GPCountdown(props: { raceDate: Date }) {
 
     }     
     
-    useEffect(() => {
-        if (props.raceDate) {
-            intervalRef.current = setInterval(() => {
-                countTime()
-            }, 1000);
-        }
-        
-    }, [props.raceDate]) 
-
     useFocusEffect(
         useCallback(() => {
             setCountdown({
@@ -70,6 +61,10 @@ export default function GPCountdown(props: { raceDate: Date }) {
                 hours: 0,
                 minutes: 0,
             })
+            countTime()
+            intervalRef.current = setInterval(() => {
+                countTime()
+            }, 60000);
             return () => {
                 clearInterval(intervalRef.current) 
                 intervalRef.current = null
