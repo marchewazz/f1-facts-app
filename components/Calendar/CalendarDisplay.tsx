@@ -16,7 +16,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
 
     const [value, setValue] = useState<{
         year: string
-    }>({year: "2023"});
+    }>({year: "2024"});
 
     const [calendar, setCalendar] = useState<RaceSchedule[]>([]);
 
@@ -46,7 +46,7 @@ export default function CalendarDisplay(props: { navigation: any }) {
             year: string
         }[]  = []
 
-        for (let i = 2023; i >= 1950; i--) {
+        for (let i = 2024; i >= 1950; i--) {
             years.push({
                 year: i.toString()
             })

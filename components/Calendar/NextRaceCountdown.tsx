@@ -30,7 +30,7 @@ export default function NextRaceCountdown(this: any, props: { navigation: any })
             const response = await fetch(`http://ergast.com/api/f1/current/next.json`)
             const json = await response.json();
           
-            setRaceSchedule(json.MRData.RaceTable.Races[0] as RaceSchedule);
+            if (json.MRData.total != "0") setRaceSchedule(json.MRData.RaceTable.Races[0] as RaceSchedule);
           } catch (error) {
             console.error(error);
           } finally {
@@ -52,7 +52,7 @@ export default function NextRaceCountdown(this: any, props: { navigation: any })
             seconds: 1
         };
         
-        let raceDate = new Date(`${raceSchedule?.date}T${raceSchedule?.time}`)
+        let raceDate = new Date(`${raceSchedule?.date}T${raceSchedule?.time || "0:00:00"}`)
         
         let delta = Math.abs(raceDate.getTime() - new Date().getTime()) / 1000
         
@@ -76,11 +76,11 @@ export default function NextRaceCountdown(this: any, props: { navigation: any })
 
     useEffect(() => {
         if (raceSchedule) {
+            countTime()
             intervalRef.current = setInterval(() => {
                 countTime()
             }, 60000);
         }
-        
     }, [raceSchedule]) 
 
     useFocusEffect(

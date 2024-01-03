@@ -85,7 +85,7 @@ export default function ConstructorsStandingsScreen() {
                     { standings.map((constructor: Constructor) => {
                         return (
                             <View key={constructor.Constructor.constructorId} className="flex flex-row items-center justify-between w-full my-1 mb-1">
-                                <Text className="w-12 text-2xl text-white">
+                                <Text className="w-10 text-2xl text-white">
                                     { constructor.positionText }
                                 </Text>
                                 <View className="flex justify-center items-start grow break-words w-10">
@@ -100,7 +100,7 @@ export default function ConstructorsStandingsScreen() {
                                         </Text>
                                     ) : (null)}
                                 </View>
-                                <Text className="text-2xl justify-self-end text-white w-12 text-right">
+                                <Text className="text-2xl justify-self-end text-white w-20 text-right">
                                     { constructor.points }
                                 </Text>
                             </View>

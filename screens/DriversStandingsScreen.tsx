@@ -91,7 +91,7 @@ export default function DriversStandingsScreen() {
                                         )}
                                     </Text>
                                 </View>
-                                <Text className="text-2xl justify-self-end text-white text-right">
+                                <Text className="text-2xl justify-self-end text-white text-right w-20">
                                     { driver.points }
                                 </Text>
                             </View>

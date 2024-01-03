@@ -33,8 +33,7 @@ export default function SingleGPScreen(props: any) {
         `http://ergast.com/api/f1/${props.route.params.schedule.season}/${props.route.params.schedule.round}/results.json`
       );
       const json = await response.json();
-
-      setRaceResults(json.MRData.RaceTable.Races[0].Results as RaceResults);
+      if (json.MRData.total != "0") setRaceResults(json.MRData.RaceTable.Races[0].Results as RaceResults);
     } catch (error) {
       console.error(error);
     }
@@ -46,10 +45,7 @@ export default function SingleGPScreen(props: any) {
         `http://ergast.com/api/f1/${props.route.params.schedule.season}/${props.route.params.schedule.round}/sprint.json`
       );
       const json = await response.json();
-
-      setSprintResults(
-        json.MRData.RaceTable.Races[0].SprintResults as RaceResults
-      );
+      if (json.MRData.total != "0") setSprintResults(json.MRData.RaceTable.Races[0].SprintResults as RaceResults);
     } catch (error) {
       console.error(error);
     }
@@ -61,10 +57,7 @@ export default function SingleGPScreen(props: any) {
         `http://ergast.com/api/f1/${props.route.params.schedule.season}/${props.route.params.schedule.round}/qualifying.json`
       );
       const json = await response.json();
-
-      setQualifyingResults(
-        json.MRData.RaceTable.Races[0].QualifyingResults as QualifyingResults
-      );
+      if (json.MRData.total != "0") setQualifyingResults(json.MRData.RaceTable.Races[0].QualifyingResults as QualifyingResults);
     } catch (error) {
       console.error(error);
     }
@@ -80,8 +73,8 @@ export default function SingleGPScreen(props: any) {
             }`
           ).getTime() < new Date().getTime()
         )
-          fetchQualifyingResults();
-      } else fetchQualifyingResults();
+          await fetchQualifyingResults();
+      } else await fetchQualifyingResults();
     }
     if (
       props.route.params.schedule?.Sprint &&
@@ -104,7 +97,7 @@ export default function SingleGPScreen(props: any) {
       await fetchRaceResults();
       setTab("race");
     }
-    setReady(true);
+    setReady(true)
   }
 
   useEffect(() => {
@@ -142,7 +135,7 @@ export default function SingleGPScreen(props: any) {
           `${schedule.date}T${schedule.time ?? "0:00:00"}`
         );
     }
-  }, [schedule]);
+  }, [schedule]);  
 
   useFocusEffect(
     useCallback(() => {
