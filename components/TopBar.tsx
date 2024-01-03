@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import AppContext from "../AppContext";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faMobileButton, faVolumeLow, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function TopBar() {
 
@@ -20,22 +22,16 @@ export default function TopBar() {
                       <Text className="font-extrabold text-white text-lg">
                           {
                               audioOn ? (
-                                  "ON"
+                                <FontAwesomeIcon icon={faVolumeLow} color="#FFF" size={32} />
                               ) : (
-                                  "OFF"
+                                <FontAwesomeIcon icon={faVolumeXmark} color="#FF1801" size={40} />
                               )
                           }
                       </Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => setVibrationOn(!vibrationOn)}>
-                      <Text className="font-extrabold text-white text-lg">
-                          {
-                              vibrationOn ? (
-                                  "ON"
-                              ) : (
-                                  "OFF"
-                              )
-                          }
+                      <Text className="font-extrabold text-white text-lg relative">
+                        <FontAwesomeIcon icon={faMobileButton} color={vibrationOn ? "#FFF" : "#FF1801"} size={32} />
                       </Text>
                   </TouchableOpacity>
               </View>
